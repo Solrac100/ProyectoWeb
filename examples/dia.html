@@ -6,7 +6,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" />
     <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Registro Hora Clase</title>
+    <title>Registro Día</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
     <!-- Bootstrap core CSS     -->
@@ -41,21 +41,15 @@
                         </a>
                     </li>
                     <li>
-                        <a href="./usuario.html">
+                        <a href="./trabajador.html">
                             <i class="material-icons">person</i>
-                            <p>Usuarios</p>
+                            <p>Trabajador</p>
                         </a>
                     </li>
                     <li>
-                        <a href="./profesor.html">
+                        <a href="./alumno.html">
                             <i class="material-icons">school</i>
-                            <p>Profesores</p>
-                        </a>
-                    </li>
-                    <li class="active">
-                        <a href="./clase.html">
-                            <i class="material-icons">query_builder</i>
-                            <p>Hora clase</p>
+                            <p>Alumno</p>
                         </a>
                     </li>
                     <li>
@@ -63,11 +57,23 @@
                             <i class="material-icons">people</i>
                             <p>Grupos</p>
                         </a>
+                    </li>                    
+                    <li class="active">
+                        <a href="./dia.html">
+                            <i class="material-icons">today</i>
+                            <p>Día</p>
+                        </a>
                     </li>
                     <li>
-                        <a href="./salon.html">
-                            <i class="material-icons">location_city</i>
-                            <p>Salones</p>
+                        <a href="./hora.html">
+                            <i class="material-icons">query_builder</i>
+                            <p>Hora</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./periodo.html">
+                            <i class="material-icons">date_range</i>
+                            <p>Periodo</p>
                         </a>
                     </li>
                     <li>
@@ -75,7 +81,7 @@
                             <i class="material-icons text-gray">assignment</i>
                             <p>Reportes</p>
                         </a>
-                    </li>
+                    </li>  
                 </ul>
             </div>
         </div>
@@ -109,60 +115,20 @@
                         <div class="col-md-8">
                             <div class="card">
                                 <div class="card-header" data-background-color="red">
-                                    <h4 class="title">Horas clase</h4>
-                                    <p class="category">Datos de la hora clase</p>
+                                    <h4 class="title">Día</h4>
+                                    <p class="category">Datos del día</p>
                                 </div>
                                 <div class="card-content">
                                     <form>
                                          <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <div class="form-group label-floating">
-                                                    <label class="control-label">Nombre clase</label>
-                                                    <input type="text" class="form-control" id="clase" name="clase">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group label-floating">
-                                                    <label class="control-label">Profesor</label>
-                                                    <input type="text" class="form-control" id="profesor" name="profesor">
+                                                    <label class="control-label">Día</label>
+                                                    <input type="text" class="form-control" id="dia" name="dia">
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                           <div class="col-md-6">
-                                                <div class="form-group label-floating">
-                                                    <label class="control-label">Hora inicio</label>
-                                                    <input type="time" class="form-control" id="horainicio" name="horainicio">
-                                                </div>
-                                            </div>    
-                                            <div class="col-md-6">
-                                                <div class="form-group label-floating">
-                                                    <label class="control-label">Hora final</label>
-                                                    <input type="time" class="form-control" id="horafin" name="horafin">
-                                                </div>
-                                            </div>                                          
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="form-group label-floating">
-                                                    <label class="control-label">Salón</label>
-                                                    <input type="text" class="form-control" id="salon" name="salon">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <div class="form-group label-floating">
-                                                    <label class="control-label">Grupo</label>
-                                                    <input type="text" class="form-control" id="grupo" name="grupo">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group label-floating">
-                                                    <label class="control-label">Jefe de Grupo</label>
-                                                    <input type="text" class="form-control" id="jefegrupo" name="jefegrupo">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary pull-right">Inserta clase</button>
+                                        <button type="submit" class="btn btn-primary pull-right">Inserta día</button>
                                         <div class="clearfix"></div>
                                     </form>
                                 </div>

@@ -6,7 +6,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" />
     <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Registro Profesor</title>
+    <title>Registro Alumno</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
     <!-- Bootstrap core CSS     -->
@@ -41,21 +41,15 @@
                         </a>
                     </li>
                     <li>
-                        <a href="./usuario.html">
+                        <a href="./trabajador.html">
                             <i class="material-icons">person</i>
-                            <p>Usuarios</p>
+                            <p>Trabajador</p>
                         </a>
                     </li>
                     <li class="active">
-                        <a href="./profesor.html">
+                        <a href="./alumno.html">
                             <i class="material-icons">school</i>
-                            <p>Profesores</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="./clase.html">
-                            <i class="material-icons">query_builder</i>
-                            <p>Hora clase</p>
+                            <p>Alumno</p>
                         </a>
                     </li>
                     <li>
@@ -63,11 +57,23 @@
                             <i class="material-icons">people</i>
                             <p>Grupos</p>
                         </a>
+                    </li>                    
+                    <li>
+                        <a href="./dia.html">
+                            <i class="material-icons">today</i>
+                            <p>Día</p>
+                        </a>
                     </li>
                     <li>
-                        <a href="./salon.html">
-                            <i class="material-icons">location_city</i>
-                            <p>Salones</p>
+                        <a href="./hora.html">
+                            <i class="material-icons">query_builder</i>
+                            <p>Hora</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./periodo.html">
+                            <i class="material-icons">date_range</i>
+                            <p>Periodo</p>
                         </a>
                     </li>
                     <li>
@@ -109,8 +115,8 @@
                         <div class="col-md-8">
                             <div class="card">
                                 <div class="card-header" data-background-color="red">
-                                    <h4 class="title">Profesores</h4>
-                                    <p class="category">Datos del Profesores</p>
+                                    <h4 class="title">Alumnos</h4>
+                                    <p class="category">Datos del Alumno</p>
                                 </div>
                                 <div class="card-content">
                                     <form>
@@ -131,34 +137,24 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                           <div class="col-md-6">
-                                                <div class="form-group label-floating">
-                                                    <label class="control-label">Correo</label>
-                                                    <input type="email" class="form-control" id="correo" name="correo">
-                                                </div>
-                                            </div>    
                                             <div class="col-md-6">
                                                 <div class="form-group label-floating">
-                                                    <label class="control-label">Teléfono</label>
-                                                    <input type="text" class="form-control" id="telefono" name="telefono">
-                                                </div>
-                                            </div>                                          
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group label-floating">
-                                                    <label class="control-label">Número de trabajador</label>
-                                                    <input type="text" class="form-control" id="numerotrabajador" name="numerotrabajador">
+                                                    <label class="control-label">Rol</label>
+                                                    <select class="form-control" id="rol" name="rol">
+                                                        <option disabled="disabled" selected="selected"></option>
+                                                        <option value="jefe de grupo">Jefe de grupo</option>
+                                                        <option value="jefe de grupo">Alumno</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <div >
-                                                    <label >Seleccionar imagen...</label>
-                                                    <input accept="image/*"  type="file" capture id="seleccionaimagen" name="seleccionaimagen"> <!-- abre la camara en caso de ser un disposituvo móvil -->
+                                                <div class="form-group label-floating">
+                                                    <label class="control-label">Fecha eliminación</label>
+                                                    <input type="Date" class="form-control" id="fechaelim" name="fechaelim">
                                                 </div>
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-primary pull-right">Inserta profesor</button>
+                                        <button type="submit" class="btn btn-primary pull-right">Inserta alumno</button>
                                         <div class="clearfix"></div>
                                     </form>
                                 </div>
