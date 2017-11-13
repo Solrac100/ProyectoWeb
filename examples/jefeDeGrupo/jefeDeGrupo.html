@@ -60,12 +60,29 @@
   	}
 	</script>
 
-	<script>
+	<script type="text/javascript">
 	function obtenhora()
 	{
 		var d = new Date();
-		var hora = d.getHours(); /*tambien se puede usar getMinutes();*/
+		var hora = d.getHours();
 		var minutos = d.getMinutes(); 
+		/*bloquear acordion de acuerdo a la hora*/
+		var elemento1 = document.getElementById("collapse1");
+		var elemento2 = document.getElementById("collapse2");
+		var elemento3 = document.getElementById("collapse3");
+		var elemento4 = document.getElementById("collapse4");
+	 	if (hora==7 && minutos >= 45) 
+	 	{
+	 		elemento1.classList.add("hide");
+	 	}else if(hora==9 && minutos>=15){
+	 		elemento2.classList.add("hide");
+	 	}else if(hora==11 && minutos>=5){
+	 		elemento3.classList.add("hide");
+	 	}else if (hora==12 && minutos>=30) {
+	 		elemento4.classList.add("hide");
+	 	}
+
+		/*generar hora completa*/
 		if (minutos < 10) {
 			minutos = '0' + minutos;
 		}
@@ -78,8 +95,17 @@
 	 	}
 	 	document.getElementById('hora').value = hora;
 	}
-</script>
+	</script>
 
+	<script type="text/javascript">
+		$(document).ready(function() {
+		  refresh_field();
+		})
+
+		function refresh_field() {
+		    window.setTimeout(refresh_field, 1000);
+		}
+	</script>
 </head>
 <body onload="obtendia(); obtenhora()">
 
