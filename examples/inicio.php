@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<!-- hola jajaja 08:07pm -->
+<!-- PRUEBA CON AJAX -->
 <head>
     <meta charset="utf-8" />
     <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" />
@@ -18,6 +18,7 @@
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
         $('#trabajador').click(function(){
@@ -25,7 +26,7 @@
             type: "POST",
             url: "trabajador.html",
             success: function(a){
-                $('#content').html(a);
+                $('#hola').html(a);
             }
             })
         })
@@ -54,7 +55,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" id="trabajador">
+                        <a id="trabajador" href="#">
                             <i class="material-icons">person</i>
                             <p>Trabajador</p>
                         </a>
@@ -122,6 +123,7 @@
                     </div>
                 </div>
             </nav>
+        <div id="hola"> 
             <div class="content" id="content">
                 <div class="container-fluid">
                     <div class="row">
@@ -129,6 +131,7 @@
                     </div>
                 </div>
             </div>
+        </div>
             <footer class="footer">
                 <div class="container-fluid">
                     <p class="copyright pull-right">
