@@ -42,7 +42,7 @@ body{
 	cursor: pointer;
 }
 
-.enviar{
+.enviar, .mostrarhorario{
 	background-color: #dc3632;
 	border-color: #dc3632;
     color: #FFFFFF;
