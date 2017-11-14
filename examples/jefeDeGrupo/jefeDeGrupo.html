@@ -73,13 +73,21 @@
 		var elemento4 = document.getElementById("collapse4");
 	 	if (hora==7 && minutos >= 45) 
 	 	{
-	 		elemento1.classList.add("hide");
-	 	}else if(hora==9 && minutos>=15){
 	 		elemento2.classList.add("hide");
-	 	}else if(hora==11 && minutos>=5){
 	 		elemento3.classList.add("hide");
-	 	}else if (hora==12 && minutos>=30) {
 	 		elemento4.classList.add("hide");
+	 	}else if(hora==9 && minutos>=15){
+	 		elemento1.classList.add("hide");
+	 		elemento3.classList.add("hide");
+	 		elemento4.classList.add("hide");
+	 	}else if(hora==11 && minutos>=5){
+	 		elemento1.classList.add("hide");
+	 		elemento2.classList.add("hide");
+	 		elemento4.classList.add("hide");
+	 	}else if (hora==12 && minutos>=30) {
+	 		elemento1.classList.add("hide");
+	 		elemento2.classList.add("hide");
+	 		elemento3.classList.add("hide");
 	 	}
 
 		/*generar hora completa*/
@@ -97,15 +105,18 @@
 	}
 	</script>
 
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		$(document).ready(function() {
 		  refresh_field();
 		})
-
+	
 		function refresh_field() {
+		  $.get("ajax_file.php", function(data) {
+		    $("#last").val(data);
 		    window.setTimeout(refresh_field, 1000);
+		  });
 		}
-	</script>
+	</script> -->
 </head>
 <body onload="obtendia(); obtenhora()">
 
