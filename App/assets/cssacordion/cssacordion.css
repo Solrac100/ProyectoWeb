@@ -1,0 +1,50 @@
+body{
+	font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: 300;
+    line-height: 1.5em;
+}
+
+.imagen{
+	width: 220px;
+	height: 250px;
+	margin: auto;
+}
+
+.panel-heading{
+	background-color: #dc3632 !important;
+	color: #fff !important;	
+}
+
+.fotosmaestros{
+	width: 200px;
+	height: 200px;
+}
+
+.informacion{
+	text-align: center;
+}
+
+.angulo{
+	font-size: 50px;
+	color: #159100;
+	cursor: pointer;
+}
+
+.tacha{
+	font-size: 50px;
+	color: #ef0202;
+	cursor: pointer;
+}
+
+.tachatabla{
+	font-size: 30px;
+	color: #ef0202;
+	cursor: pointer;
+}
+
+.enviar, .mostrarhorario{
+	background-color: #dc3632;
+	border-color: #dc3632;
+    color: #FFFFFF;
+    box-shadow: 0 2px 2px 0 rgba(156, 39, 176, 0.14), 0 3px 1px -2px rgba(156, 39, 176, 0.2), 0 1px 5px 0 rgba(156, 39, 176, 0.12);
+}

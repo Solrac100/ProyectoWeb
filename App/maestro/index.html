@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>Maestro</title>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="../assets/cssacordion/cssacordion.css">
+
+	<script type="text/javascript">
+  	function deleteRow(r) 
+  	{
+    	var i = r.parentNode.parentNode.rowIndex;
+    	document.getElementById("tablaalumnos").deleteRow(i);
+    }
+	</script>
+	<script type="text/javascript">
+  	function asmaestrosi() 
+  	{
+    	document.getElementById("asistenciamaestro").value = 'SI';
+    }
+
+    function asmaestrono()
+    {
+    	document.getElementById('asistenciamaestro').value = 'NO';
+    }
+	</script>
+	<script type="text/javascript">
+  	function obtendia()
+  	{
+  		var day;
+  		switch (new Date().getDay()) {	
+  		    case 0:
+  		        day = "Domingo";
+  		        break;
+  		    case 1:
+  		        day = "Lunes";
+  		        break;
+  		    case 2:
+  		        day = "Martes";
+  		        break;
+  		    case 3:
+  		        day = "Miércoles";
+  		        break;
+  		    case 4:
+  		        day = "Jueves";
+  		        break;
+  		    case 5:
+  		        day = "Viernes";
+  		        break;
+  		    case 6:
+  		        day = "Sábado";
+  		}	
+  		document.getElementById('dia').value = day;
+  	}
+	</script>
+
+	<script>
+	function obtenhora()
+  {
+    var d = new Date();
+    var hora = d.getHours();
+    var minutos = d.getMinutes(); 
+    /*bloquear acordion de acuerdo a la hora*/
+    var elemento1 = document.getElementById("collapse1");
+    var elemento2 = document.getElementById("collapse2");
+    var elemento3 = document.getElementById("collapse3");
+    var elemento4 = document.getElementById("collapse4");
+    if (hora==7 && minutos >= 45) 
+    {
+      elemento2.classList.add("hide");
+      elemento3.classList.add("hide");
+      elemento4.classList.add("hide");
+    }else if(hora==9 && minutos>=15){
+      elemento1.classList.add("hide");
+      elemento3.classList.add("hide");
+      elemento4.classList.add("hide");
+    }else if(hora==11 && minutos>=5){
+      elemento1.classList.add("hide");
+      elemento2.classList.add("hide");
+      elemento4.classList.add("hide");
+    }else if (hora==12 && minutos>=30) {
+      elemento1.classList.add("hide");
+      elemento2.classList.add("hide");
+      elemento3.classList.add("hide");
+    }
+
+    /*generar hora completa*/
+    if (minutos < 10) {
+      minutos = '0' + minutos;
+    }
+    if (hora > 12) {
+      hora = (hora - 12) + ':' + minutos + ' ' + 'P.M.';
+    }else if(hora == 0){
+      hora = '12' + ':' + minutos + ' ' + 'A.M.';
+    }else{
+      hora = hora + ':' + minutos + ' ' + 'A.M.';
+    }
+    document.getElementById('hora').value = hora;
+  }
+</script>
+
+</head>
+<body onload="obtendia(); obtenhora()">
+
+<div class="container">
+	<img src="../assets/imagenes/logo.png" alt="Benemérita Escuela Normal de Coahuila" class="img img-responsive imagen">
+	<h2 align="center">Maestro</h2><h3 align="center">Pase de lista</h3>
+  	<p><strong>Instrucciones:</strong> El pase de lista se le hará al <strong>maestro.</p>
+  	<input type="submit" name="mostrarhorario" id="mostrarhorario" class="btn btn-primary pull-right mostrarhorario" value="MOSTRAR MI HORARIO" style="float: right;">
+    <div class="panel-group" id="accordion" style="margin-top: 50px;">
+	    <div class="panel panel-default">
+      		<div class="panel-heading">
+        		<h4 class="panel-title">
+          			<a data-toggle="collapse" data-parent="#accordion" href="#collapse1">7:45 A.M.</a>
+        		</h4>
+      		</div>
+      		<div id="collapse1" class="panel-collapse collapse"><!-- se le agrega "in" para que se la que se abre por default-->
+      			<div class="panel-body">
+      				<h3>Maestro:</h3>
+      				<center>
+      					<img src="../assets/imagenes/fotosmaestros/maestro1.jpg" alt="Maestro1" class="fotosmaestros">
+      				</center>
+      				<form action="">
+      					<div class="informacion" id="informacion">
+      						<p>
+      							<strong>ID: </strong>
+      								<input type="text" readonly value="X" style="border:none; width:50px;">
+      						</p>
+      						<p>
+      							<strong>Hora: </strong>
+      								<input type="text" readonly value="00:00" style="border:none; width:70px;" id="hora">
+      						</p>
+      						<p>
+      							<strong>Día: </strong>
+      								<input type="text" readonly style="border:none; width:100px;" id="dia">
+      						</p>
+	      					<p>
+	      						<strong>Maestro: </strong>
+	      							<input type="text" readonly value="Lorem ipsum dolor sit amet." style="border:none; width:250px;">
+	      					</p>
+    	  					<p>
+    	  						<strong>Materia: </strong>
+    	  							<input type="text" readonly value="Lorem ipsum dolor sit amet." style="border:none; width:250px;">
+    	  					</p>
+      						<p>
+      							<strong>Salón: </strong>
+      								<input type="text" readonly value="Lorem ipsum dolor sit amet." style="border:none; width:250px;">
+      						</p>
+      						<p>
+      							<strong>Grupo: </strong>
+      								<input type="text" readonly value="Lorem ipsum dolor sit amet." style="border:none; width:250px;">
+      						</p>
+      						<p>
+      							<strong>Ubicación: </strong>
+      								<input type="text" readonly value="Lorem ipsum dolor sit amet." style="border:none; width:250px;">
+      						</p>
+      						<p>
+      							<strong>Clase: </strong><input type="text" readonly value="Lorem ipsum dolor sit amet." style="border:none; width:250px;">
+      						</p>
+      						<p>
+      							<strong>Periodo: </strong><input type="text" readonly value="Lorem ipsum dolor sit amet." style="border:none; width:250px;">
+      						</p>
+      						<i class="fa fa-check-circle angulo" aria-hidden="true" onclick="asmaestrosi()"></i>
+      						<i class="fa fa-times-circle tacha" aria-hidden="true" onclick="asmaestrono()"></i>
+      						<input type="text" readonly value="" name="asistenciamaestro" id="asistenciamaestro" style="width: 30px;">
+      					</div><br>
+      					<input type="submit" name="enviar" id="enviar" class="btn btn-primary pull-right enviar" value="ENVIAR ASISTENCIA MAESTRO">
+      				</form>
+      			</div>
+      		</div>
+    	</div>
+    
+    	<div class="panel panel-default">
+    	  	<div class="panel-heading">
+	        	<h4 class="panel-title">
+          			<a data-toggle="collapse" data-parent="#accordion" href="#collapse2">9:15 A.M.</a>
+        		</h4>
+      		</div>
+      		<div id="collapse2" class="panel-collapse collapse">
+	        	<div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+        		sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+      		</div>
+    	</div>
+    
+    	<div class="panel panel-default">
+      		<div class="panel-heading">
+        			<h4 class="panel-title">
+          				<a data-toggle="collapse" data-parent="#accordion" href="#collapse3">11:05 A.M.</a>
+        			</h4>
+      		</div>
+      		<div id="collapse3" class="panel-collapse collapse">
+        		<div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+        		sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+      		</div>
+    	</div>
+    
+    	<div class="panel panel-default">
+      		<div class="panel-heading">
+        			<h4 class="panel-title">
+          				<a data-toggle="collapse" data-parent="#accordion" href="#collapse4">12:30 P.M.</a>
+        			</h4>
+      		</div>
+      		<div id="collapse4" class="panel-collapse collapse">
+		        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+        		sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+      		</div>
+    	</div>
+  	</div> 
+</div>
+	
+</body>
+</html>	
