@@ -6,7 +6,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" />
     <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Registro Grupo</title>
+    <title>Admin | Grupo</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
     <!-- Bootstrap core CSS     -->
@@ -28,20 +28,26 @@
         Tip 2: you can also add an image using data-image tag
     -->
             <div class="logo">
-                <a href="#" class="simple-text">
-                    Benemérita Escuela <br>	 Normal de Coahuila
+                <a href="index.html" class="simple-text">
+                    Benemérita Escuela <br>  Normal de Coahuila
                 </a>
             </div>
             <div class="sidebar-wrapper">
                 <ul class="nav">
                     <li>
-                        <a href="inicio.html">
+                        <a href="index.html">
                             <i class="material-icons">home</i>
                             <p>Inicio</p>
                         </a>
                     </li>
                     <li>
-                        <a href="./trabajador.html">
+                        <a href="./usuario.html">
+                            <i class="material-icons">account_circle</i>
+                            <p>Usuario</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="trabajador.html" id="trabajador">
                             <i class="material-icons">person</i>
                             <p>Trabajador</p>
                         </a>
@@ -55,21 +61,15 @@
                     <li class="active">
                         <a href="./grupo.html">
                             <i class="material-icons">people</i>
-                            <p>Grupos</p>
+                            <p>Grupo</p>
                         </a>
                     </li>                    
                     <li>
-                        <a href="./dia.html">
-                            <i class="material-icons">today</i>
-                            <p>Día</p>
+                        <a href="./clase.html">
+                            <i class="material-icons">description</i>
+                            <p>Clase</p>
                         </a>
-                    </li>
-                    <li>
-                        <a href="./hora.html">
-                            <i class="material-icons">query_builder</i>
-                            <p>Hora</p>
-                        </a>
-                    </li>
+                    </li>                    
                     <li>
                         <a href="./periodo.html">
                             <i class="material-icons">date_range</i>
@@ -81,7 +81,7 @@
                             <i class="material-icons text-gray">assignment</i>
                             <p>Reportes</p>
                         </a>
-                    </li>  
+                    </li>
                 </ul>
             </div>
         </div>
@@ -143,6 +143,84 @@
                                         <button type="submit" class="btn btn-primary pull-right">Inserta grupo</button>
                                         <div class="clearfix"></div>
                                     </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card card-plain">
+                                <div class="card-header" data-background-color="red">
+                                    <h4 class="title">Grupos Registrados</h4>
+                                    <p class="category">Modificación / eliminación de grupos</p>
+                                </div>
+                  <div class="collapse navbar-collapse navbar-ex1-collapse">
+                  <form class="navbar-form navbar-left" role="search" action="./buscar.php">
+                        <div class="form-group">
+                          <input type="text" name="s" class="form-control" placeholder="Buscar">
+                        </div>
+                        <button type="submit" class="btn btn-default">&nbsp;<i class="material-icons">search</i>&nbsp;</button>
+                      </form>
+                    </div><!-- /.navbar-collapse -->
+                                <div class="card-content table-responsive">
+                                    <table class="table table-hover">
+                                    <thead>
+                                        <th>ID</th>
+                                        <th>Nombre</th>
+                                        <th>Salón</th>
+                                        <th>Piso</th>
+                                        <th> </th>
+                                    </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>1A</td>
+                                                <td>R4</td>
+                                                <td>1</td>
+                                                <td style="width:150px;">
+                                                    <a href="#" class="btn btn-sm btn-warning">Editar</a>
+                                                    <a href="#" id="eliminar" class="btn btn-sm btn-danger">Eliminar</a>
+                                                    <script>
+                                                    $("#del-"+<?php echo $r["id"];?>).click(function(e){
+                                                        e.preventDefault();
+                                                        p = confirm("Estas seguro?");
+                                                        if(p){
+                                                            window.location="#"+<?php echo $r["id"];?>;
+
+                                                        }
+
+                                                    });
+                                                    </script>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>2A</td>
+                                                <td>R5</td>
+                                                <td>1</td>
+                                                <td style="width:150px;">
+                                                    <a href="#" class="btn btn-sm btn-warning">Editar</a>
+                                                    <a href="#" id="eliminar" class="btn btn-sm btn-danger">Eliminar</a>
+                                                    <script>
+                                                    $("#del-"+<?php echo $r["id"];?>).click(function(e){
+                                                        e.preventDefault();
+                                                        p = confirm("Estas seguro?");
+                                                        if(p){
+                                                            window.location="#"+<?php echo $r["id"];?>;
+
+                                                        }
+
+                                                    });
+                                                    </script>
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>

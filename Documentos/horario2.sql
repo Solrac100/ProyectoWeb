@@ -8,22 +8,22 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema horarios
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `mydb` ;
+DROP SCHEMA IF EXISTS `horarios` ;
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema horarios
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
+CREATE SCHEMA IF NOT EXISTS `horarios` DEFAULT CHARACTER SET utf8 ;
+USE `horarios` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`trabajador`
+-- Table `horarios`.`trabajador`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`trabajador` ;
+DROP TABLE IF EXISTS `horarios`.`trabajador` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`trabajador` (
+CREATE TABLE IF NOT EXISTS `horarios`.`trabajador` (
   `idtrabajador` INT NOT NULL,
   `nombre` VARCHAR(25) NOT NULL,
   `apellidos` VARCHAR(35) NOT NULL,
@@ -35,11 +35,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`grupo`
+-- Table `horarios`.`grupo`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`grupo` ;
+DROP TABLE IF EXISTS `horarios`.`grupo` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`grupo` (
+CREATE TABLE IF NOT EXISTS `horarios`.`grupo` (
   `idgrupo` INT NOT NULL,
   `nombre` VARCHAR(4) NOT NULL,
   `salon` VARCHAR(4) NOT NULL,
@@ -49,11 +49,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`usuario`
+-- Table `horarios`.`usuario`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`usuario` ;
+DROP TABLE IF EXISTS `horarios`.`usuario` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`usuario` (
+CREATE TABLE IF NOT EXISTS `horarios`.`usuario` (
   `idusuario` INT NOT NULL,
   `nombre` VARCHAR(45) NOT NULL,
   `contraseña` VARCHAR(50) NOT NULL,
@@ -63,18 +63,18 @@ CREATE TABLE IF NOT EXISTS `mydb`.`usuario` (
   INDEX `fk_usuario_trabajador1_idx` (`trabajador_idtrabajador` ASC),
   CONSTRAINT `fk_usuario_trabajador1`
     FOREIGN KEY (`trabajador_idtrabajador`)
-    REFERENCES `mydb`.`trabajador` (`idtrabajador`)
+    REFERENCES `horarios`.`trabajador` (`idtrabajador`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`alumno`
+-- Table `horarios`.`alumno`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`alumno` ;
+DROP TABLE IF EXISTS `horarios`.`alumno` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`alumno` (
+CREATE TABLE IF NOT EXISTS `horarios`.`alumno` (
   `idalumno` INT NOT NULL,
   `nombre` VARCHAR(25) NOT NULL,
   `apellidos` VARCHAR(35) NOT NULL,
@@ -87,23 +87,23 @@ CREATE TABLE IF NOT EXISTS `mydb`.`alumno` (
   INDEX `fk_alumno_usuario1_idx` (`usuario_idusuario` ASC, `usuario_trabajador_idtrabajador` ASC),
   CONSTRAINT `fk_alumno_grupo`
     FOREIGN KEY (`idgrupo`)
-    REFERENCES `mydb`.`grupo` (`idgrupo`)
+    REFERENCES `horarios`.`grupo` (`idgrupo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_alumno_usuario1`
     FOREIGN KEY (`usuario_idusuario` , `usuario_trabajador_idtrabajador`)
-    REFERENCES `mydb`.`usuario` (`idusuario` , `trabajador_idtrabajador`)
+    REFERENCES `horarios`.`usuario` (`idusuario` , `trabajador_idtrabajador`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`periodo`
+-- Table `horarios`.`periodo`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`periodo` ;
+DROP TABLE IF EXISTS `horarios`.`periodo` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`periodo` (
+CREATE TABLE IF NOT EXISTS `horarios`.`periodo` (
   `idperiodo` INT NOT NULL,
   `tipo` VARCHAR(1) NOT NULL,
   `año` VARCHAR(4) NOT NULL,
@@ -112,11 +112,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`clase`
+-- Table `horarios`.`clase`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`clase` ;
+DROP TABLE IF EXISTS `horarios`.`clase` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`clase` (
+CREATE TABLE IF NOT EXISTS `horarios`.`clase` (
   `idclase` INT NOT NULL,
   `idalumno` INT NOT NULL,
   `idgrupo` INT NOT NULL,
@@ -130,28 +130,28 @@ CREATE TABLE IF NOT EXISTS `mydb`.`clase` (
   INDEX `fk_clase_periodo1_idx` (`periodo_idperiodo` ASC),
   CONSTRAINT `fk_alumno_has_trabajador_alumno1`
     FOREIGN KEY (`idalumno` , `idgrupo`)
-    REFERENCES `mydb`.`alumno` (`idalumno` , `idgrupo`)
+    REFERENCES `horarios`.`alumno` (`idalumno` , `idgrupo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_alumno_has_trabajador_trabajador1`
     FOREIGN KEY (`idtrabajador`)
-    REFERENCES `mydb`.`trabajador` (`idtrabajador`)
+    REFERENCES `horarios`.`trabajador` (`idtrabajador`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_clase_periodo1`
     FOREIGN KEY (`periodo_idperiodo`)
-    REFERENCES `mydb`.`periodo` (`idperiodo`)
+    REFERENCES `horarios`.`periodo` (`idperiodo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`asisAlumno`
+-- Table `horarios`.`asisAlumno`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`asisAlumno` ;
+DROP TABLE IF EXISTS `horarios`.`asisAlumno` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`asisAlumno` (
+CREATE TABLE IF NOT EXISTS `horarios`.`asisAlumno` (
   `idasisAlumno` INT NOT NULL,
   `idclase` INT NOT NULL,
   `idperiodo` INT NOT NULL,
@@ -162,18 +162,18 @@ CREATE TABLE IF NOT EXISTS `mydb`.`asisAlumno` (
   INDEX `fk_asisAlumno_clase1_idx` (`idclase` ASC, `idperiodo` ASC),
   CONSTRAINT `fk_asisAlumno_clase1`
     FOREIGN KEY (`idclase` , `idperiodo`)
-    REFERENCES `mydb`.`clase` (`idclase` , `periodo_idperiodo`)
+    REFERENCES `horarios`.`clase` (`idclase` , `periodo_idperiodo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`asisTrabajador`
+-- Table `horarios`.`asisTrabajador`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`asisTrabajador` ;
+DROP TABLE IF EXISTS `horarios`.`asisTrabajador` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`asisTrabajador` (
+CREATE TABLE IF NOT EXISTS `horarios`.`asisTrabajador` (
   `idasisTrabajador` INT NOT NULL,
   `idclase` INT NOT NULL,
   `idperiodo` INT NOT NULL,
@@ -184,7 +184,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`asisTrabajador` (
   INDEX `fk_asisTrabajador_clase1_idx` (`idclase` ASC, `idperiodo` ASC),
   CONSTRAINT `fk_asisTrabajador_clase1`
     FOREIGN KEY (`idclase` , `idperiodo`)
-    REFERENCES `mydb`.`clase` (`idclase` , `periodo_idperiodo`)
+    REFERENCES `horarios`.`clase` (`idclase` , `periodo_idperiodo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
