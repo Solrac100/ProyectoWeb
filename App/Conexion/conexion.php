@@ -2,7 +2,7 @@
 	$hostBD='localhost';
 	$userBD='root';
 	$passBD='asd';
-	$BD='horarios';
+	$BD='mydb';
 
 	$conexionBD = mysql_connect($hostBD,$userBD,$passBD)
 		or die('No se pudo conectar al servidor ERROR:'.mysql_error());
