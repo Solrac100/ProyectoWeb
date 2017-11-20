@@ -1,24 +1,3 @@
-<!-- <?php
-session_start();
-    if(empty($_SESSION['usr'])){
-        echo "Debe autentificarse";
-    }
-    if (!empty($_SESSION['mensaje'])) {
-        $mensaje = $_SESSION['mensaje'];
-        $var = str_replace('+', '\\n', "$mensaje");
-        $_SESSION['mensaje'] = '';
-        echo "<SCRIPT> alert (\"$var\") </SCRIPT>";
-    } else {
-        $mensaje = '';
-    }
-
-if (isset($_GET['logout'])) {
-        $cerrar = $_GET['logout'];
-        if ($cerrar == 'out') {
-            session_destroy();
-        }
-    }
-?> -->
 <!doctype html>
 <html lang="en">
 <!-- hola jajaja 08:07pm -->
@@ -27,7 +6,7 @@ if (isset($_GET['logout'])) {
     <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" />
     <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Admin | Usuario</title>
+    <title>Admin | Alumno</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
     <!-- Bootstrap core CSS     -->
@@ -43,7 +22,7 @@ if (isset($_GET['logout'])) {
     <script src="../assets/js/perfect-scrollbar.jquery.min.js"></script>
 </head>
 <body>
-    <div class="wrapper">
+ <div class="wrapper">
         <div class="sidebar" data-color="red">
             <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
@@ -63,7 +42,7 @@ if (isset($_GET['logout'])) {
                             <p>Inicio</p>
                         </a>
                     </li>
-                    <li class="active">
+                    <li>
                         <a href="./usuario.php">
                             <i class="material-icons">account_circle</i>
                             <p>Usuario</p>
@@ -75,7 +54,7 @@ if (isset($_GET['logout'])) {
                             <p>Trabajador</p>
                         </a>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="./alumno.php">
                             <i class="material-icons">school</i>
                             <p>Alumno</p>
@@ -138,38 +117,82 @@ if (isset($_GET['logout'])) {
                         <div class="col-md-8">
                             <div class="card">
                                 <div class="card-header" data-background-color="red">
-                                    <h4 class="title">Usuarios</h4>
-                                    <p class="category">Datos del Usuario</p>
+                                    <h4 class="title">Alumnos</h4>
+                                    <p class="category">Datos del Alumno</p>
                                 </div>
                                 <div class="card-content">
-                                    <form action="insertarUsuario.php" method="post">
+                                    <form action="insertarAlumno.php" method="post">
                                          <div class="row">
-                                            <div class="col-md-4">
+                                            <div class="col-md-6">
+                                                <div class="form-group label-floating">
+                                                    <label class="control-label">Apellidos(s)</label>
+                                                    <input type="text" class="form-control" id="apellidos" name="apellidos">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group label-floating">
+                                                    <label class="control-label">Nombre(s)</label>
+                                                    <input type="text" class="form-control" id="nombres" name="nombres">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group label-floating">
+                                                    <label class="control-label">Grupo</label>
+                                                    <?php
+                                                    //poblar combo con los grupos
+                                                    error_reporting(0);
+                                                    include "../Conexion/conexion.php";
+
+                                                    $qry = "SELECT * FROM grupo";
+                                                    $resultado = mysql_query($qry);
+                                                    if(mysql_num_rows($resultado)>0)
+                                                    {
+                                                        echo "<select class='form-control' name='grupo' id='selgrupo'>";
+                                                        echo "<option selected='true' disabled='disabled'></option>";
+                                                    
+                                                        while($registro = mysql_fetch_array($resultado))
+                                                        {
+                                                            $grupoid = $registro['idgrupo'];
+                                                            $gruponombre = $registro['nombre'];
+
+                                                            echo "<option id='optCosas' name='optCosas' value='$grupoid'>$gruponombre</option>";
+                                                        }
+                                                    }
+                                                    ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
                                                 <div class="form-group label-floating">
                                                     <label class="control-label">Usuario</label>
-                                                    <input type="text" class="form-control" id="usuario" name="usuario">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group label-floating">
-                                                    <label class="control-label">Contraseña</label>
-                                                    <input type="text" class="form-control" id="contraseña" name="contraseña">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group label-floating">
-                                                    <label class="control-label">Rol</label>
-                                                    <select class="form-control" id="rol" name="rol">
-                                                        <option disabled="disabled" selected="selected"></option>
-                                                        <option value="A">Administrador</option>
-                                                        <option value="J">Jefe de Grupo</option>
-                                                        <option value="M">Maestro</option>
-                                                        <option value="P">Prefecto</option>
+                                                    <?php
+                                                    //poblar combo con los grupos
+                                                    error_reporting(0);
+                                                    include "../Conexion/conexion.php";
+
+                                                    $qry = "SELECT * FROM usuario WHERE rol='J'";
+                                                    $resultado = mysql_query($qry);
+                                                    if(mysql_num_rows($resultado)>0)
+                                                    {
+                                                        echo "<select class='form-control' name='usuario' id='selgrupo'>";
+                                                        echo "<option selected='true' disabled='disabled'></option>";
+                                                    
+                                                        while($registro = mysql_fetch_array($resultado))
+                                                        {
+                                                            $usuarioid = $registro['idusuario'];
+                                                            $usuario = $registro['usuario'];
+
+                                                            echo "<option id='optCosas' name='optCosas' value='$usuarioid'>$usuario</option>";
+                                                        }
+                                                    }
+                                                    ?>
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-primary pull-right">Inserta usuario</button>
+                                        <button type="submit" class="btn btn-primary pull-right">Inserta alumno</button>
                                         <div class="clearfix"></div>
                                     </form>
                                 </div>
@@ -184,8 +207,8 @@ if (isset($_GET['logout'])) {
                         <div class="col-md-12">
                             <div class="card card-plain">
                                 <div class="card-header" data-background-color="red">
-                                    <h4 class="title">Usuarios registrados</h4>
-                                    <p class="category">Modificación / eliminación de usuarios</p>
+                                    <h4 class="title">Alumnos registrados</h4>
+                                    <p class="category">Modificación / eliminación de alumnos</p>
                                 </div>
                                 <div class="collapse navbar-collapse navbar-ex1-collapse"><!--Div buscar-->
                                     <form class="navbar-form navbar-left" role="search" action="../assets/crud/buscar.php">
@@ -201,7 +224,7 @@ if (isset($_GET['logout'])) {
 
                                     include "../Conexion/conexion.php";
 
-                                    $qry= "SELECT * FROM usuario";
+                                    $qry= "SELECT * FROM alumno";
                                     $resultado = mysql_query($qry) or die ("*****ERROR: " .mysql_error());
 
                                     if(mysql_num_rows($resultado)>0)
@@ -210,9 +233,10 @@ if (isset($_GET['logout'])) {
                                         <table class='table table-hover'>
                                         <thead>
                                             <th>ID</th>
-                                            <th>Usuario</th>
-                                            <th>Contraseña</th>
-                                            <th>Rol</th>
+                                            <th>Nombre</th>
+                                            <th>Apellidos</th>
+                                            <th>idgrupo</th>
+                                            <th>idusuario</th>
                                             <th> </th>
                                         </thead>";
 
@@ -220,29 +244,30 @@ if (isset($_GET['logout'])) {
                                         {
                                             echo "
                                             <tr>
-                                                <td>".$registro['idusuario']."</td>
-                                                <td>".$registro['usuario']."</td>
-                                                <td>".$registro['contrasena']."</td>
-                                                <td>".$registro['rol']."</td>
+                                                <td>".$registro['idalumno']."</td>
+                                                <td>".$registro['nombre']."</td>
+                                                <td>".$registro['apellidos']."</td>
+                                                <td>".$registro['idgrupo']."</td>
+                                                <td>".$registro['usuario_idusuario']."</td>
                                                 <td style='width:150px;'>
-                                                <a href='#' id='ed-".$registro['idusuario']."' class='btn btn-sm btn-warning'>Editar</a>
+                                                <a href='#' id='ed-".$registro['idalumno']."' class='btn btn-sm btn-warning'>Editar</a>
                                                 <script>
-                                                $('#ed-".$registro['idusuario']."').click(function(e){
+                                                $('#ed-".$registro['idalumno']."').click(function(e){
                                                     e.preventDefault();
                                                     p = confirm('Estas seguro?');
                                                     if(p){
-                                                        window.location='./frmActualizaUsuario.php?id=".$registro['idusuario']."';
+                                                        window.location='./frmActualizaAlumno.php?id=".$registro['idalumno']."';
                                                     }
                                                 });
                                                 </script>
                                                 
-                                                <a href='#'' id='del-".$registro['idusuario']."' class='btn btn-sm btn-danger'>Eliminar</a>
+                                                <a href='#'' id='del-".$registro['idalumno']."' class='btn btn-sm btn-danger'>Eliminar</a>
                                                 <script>
-                                                $('#del-".$registro['idusuario']."').click(function(e){
+                                                $('#del-".$registro['idalumno']."').click(function(e){
                                                     e.preventDefault();
                                                     p = confirm('Estas seguro?');
                                                     if(p){
-                                                        window.location='./eliminarUsuario.php?id=".$registro['idusuario']."';
+                                                        window.location='./eliminarAlumno.php?id=".$registro['idalumno']."';
                                                     }
                                                 });
                                                 </script>
@@ -255,49 +280,12 @@ if (isset($_GET['logout'])) {
                                     }
 
                                     ?>
-
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-
-            <!-- Modal -->
-      <div class='modal fade' id='myModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
-        <div class='modal-dialog'>
-          <div class='modal-content'>
-            <div class='modal-header'>
-              <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-              <h4 class='modal-title'>Agregar</h4>
-            </div>
-            <div class='modal-body'>
-    <form role='form' method='post' action='php/agregar.php'>
-      <div class='form-group'>
-        <label for='idact'>id</label>
-        <input type='text' class='form-control' name='idact' required readonly value="<?php echo $registro['idusuario'] ?>">
-      </div>
-      <div class='form-group'>
-        <label for='usuarioact'>Usuario</label>
-        <input type='text' class='form-control' name='usuarioact' required>
-      </div>
-      <div class='form-group'>
-        <label for='contrasenaact'>Contraseña</label>
-        <input type='text' class='form-control' name='contrasenaact' required>
-      </div>
-      <div class='form-group'>
-        <label for='rolact'>Rol</label>
-        <input type='email' class='form-control' name='rolact' >
-      </div>
-
-      <button type='submit' class='btn btn-default'>Agregar</button>
-    </form>
-            </div>
-
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
             <footer class="footer">
                 <div class="container-fluid">
                     <p class="copyright pull-right">
@@ -332,4 +320,4 @@ if (isset($_GET['logout'])) {
 <script src="../assets/js/demo.js"></script>
 
 </body>
-</html> 
+</html>
