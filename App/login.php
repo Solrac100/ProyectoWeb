@@ -4,7 +4,7 @@
 	$user = $_POST['user'];
 	$pass = $_POST['pass'];	
 
-	$consulta = "SELECT * FROM usuario WHERE nombre='".$user."' and contrasena='".$pass."';";
+	$consulta = "SELECT * FROM usuario WHERE usuario='".$user."' and contrasena='".$pass."';";
   
 	$resultado = mysql_query($consulta) or die ("Error: ".mysql_error());
 	

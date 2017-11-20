@@ -1,47 +1,51 @@
 <?php
 
-include "conexion.php";
+include "../../../Conexion/conexion.php";
 
-$user_id=null;
-$sql1= "select * from person";
-$query = $con->query($sql1);
+$qry= "SELECT * FROM usuario";
+$resultado = mysql_query($qry) or die ("*****ERROR AL INSERTAR EL REGISTRO: " .mysql_error());
+
+if(mysql_num_rows($resultado)>0)
+{
+	echo "
+	<table class='table table-hover'>
+	<thead>
+	    <th>ID</th>
+	    <th>Usuario</th>
+	    <th>Contraseña</th>
+	    <th>Rol</th>
+	    <th>ID Trabajador</th>
+	    <th> </th>
+	</thead>";
+
+	while($registro = mysql_fetch_array($resultado))
+	{
+		echo "
+		<tr>
+    		<td>1</td>
+            <td>Jorge</td>
+            <td>López</td>
+            <td>10/05/2017</td>
+            <td>2</td>
+            <td>4</td>
+            <td style='width:150px;'>
+            <a href='#' class='btn btn-sm btn-warning'>Editar</a>  <!--EDITAR RUTA: ../assets/crud/editar.php-->
+            <a href='#'' id='eliminar' class='btn btn-sm btn-danger'>Eliminar</a> <!-- id='del-<?php echo $r['id'];?>' -->
+            <script>
+            $('#del-'".$registro['id'];.").click(function(e){
+            	e.preventDefault();
+            	p = confirm('Estas seguro?');
+            	if(p){
+	            	window.location='./php/eliminar.php?id=".$registro['id'];.";
+				}
+			});
+			</script>
+            </td>
+        </tr> ";//fin echo
+    }    
+	echo "</table>";
+else{
+	echo "<p class='alert alert-warning'>No hay resultados</p>";
+}
+
 ?>
-
-<?php if($query->num_rows>0):?>
-<table class="table table-bordered table-hover">
-<thead>
-	<th>Nombre</th>
-	<th>Apellido</th>
-	<th>Email</th>
-	<th>Direccion</th>
-	<th>Telefono</th>
-	<th></th>
-</thead>
-<?php while ($r=$query->fetch_array()):?>
-<tr>
-	<td><?php echo $r["name"]; ?></td>
-	<td><?php echo $r["lastname"]; ?></td>
-	<td><?php echo $r["email"]; ?></td>
-	<td><?php echo $r["address"]; ?></td>
-	<td><?php echo $r["phone"]; ?></td>
-	<td style="width:150px;">
-		<a href="./editar.php?id=<?php echo $r["id"];?>" class="btn btn-sm btn-warning">Editar</a>
-		<a href="#" id="del-<?php echo $r["id"];?>" class="btn btn-sm btn-danger">Eliminar</a>
-		<script>
-		$("#del-"+<?php echo $r["id"];?>).click(function(e){
-			e.preventDefault();
-			p = confirm("Estas seguro?");
-			if(p){
-				window.location="./php/eliminar.php?id="+<?php echo $r["id"];?>;
-
-			}
-
-		});
-		</script>
-	</td>
-</tr>
-<?php endwhile;?>
-</table>
-<?php else:?>
-	<p class="alert alert-warning">No hay resultados</p>
-<?php endif;?>

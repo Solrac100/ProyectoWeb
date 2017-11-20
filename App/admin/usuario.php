@@ -1,3 +1,24 @@
+<!-- <?php
+session_start();
+    if(empty($_SESSION['usr'])){
+        echo "Debe autentificarse";
+    }
+    if (!empty($_SESSION['mensaje'])) {
+        $mensaje = $_SESSION['mensaje'];
+        $var = str_replace('+', '\\n', "$mensaje");
+        $_SESSION['mensaje'] = '';
+        echo "<SCRIPT> alert (\"$var\") </SCRIPT>";
+    } else {
+        $mensaje = '';
+    }
+
+if (isset($_GET['logout'])) {
+        $cerrar = $_GET['logout'];
+        if ($cerrar == 'out') {
+            session_destroy();
+        }
+    }
+?> -->
 <!doctype html>
 <html lang="en">
 <!-- hola jajaja 08:07pm -->
@@ -18,6 +39,8 @@
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
+    <script src="../assets/js/jquery-3.2.1.min.js" type="text/javascript"></script>
+    <script src="../assets/js/perfect-scrollbar.jquery.min.js"></script>
 </head>
 <body>
     <div class="wrapper">
@@ -119,7 +142,7 @@
                                     <p class="category">Datos del Usuario</p>
                                 </div>
                                 <div class="card-content">
-                                    <form>
+                                    <form action="insertarUsuario.php" method="post">
                                          <div class="row">
                                             <div class="col-md-4">
                                                 <div class="form-group label-floating">
@@ -138,13 +161,15 @@
                                                     <label class="control-label">Rol</label>
                                                     <select class="form-control" id="rol" name="rol">
                                                         <option disabled="disabled" selected="selected"></option>
-                                                        <option value="jefe de grupo">1</option>
-                                                        <option value="jefe de grupo">2</option>
+                                                        <option value="A">Administrador</option>
+                                                        <option value="J">Jefe de Grupo</option>
+                                                        <option value="M">Maestro</option>
+                                                        <option value="P">Prefecto</option>
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-primary pull-right">Inserta alumno</button>
+                                        <button type="submit" class="btn btn-primary pull-right">Inserta usuario</button>
                                         <div class="clearfix"></div>
                                     </form>
                                 </div>
@@ -171,69 +196,108 @@
                                     </form>
                                 </div><!-- /.navbar-collapse FIN DIV BUSCAR -->
                                 <div class="card-content table-responsive">
-                                    <table class="table table-hover">
-                                    <thead>
-                                        <th>ID</th>
-                                        <th>Usuario</th>
-                                        <th>Contraseña</th>
-                                        <th>Rol</th>
-                                        <th>ID Trabajador</th>
-                                        <th> </th>
-                                    </thead>
-                                        <tbody>
+                                    <?php
+                                        error_reporting(0);
+
+                                    include "../Conexion/conexion.php";
+
+                                    $qry= "SELECT * FROM usuario";
+                                    $resultado = mysql_query($qry) or die ("*****ERROR AL INSERTAR EL REGISTRO: " .mysql_error());
+
+                                    if(mysql_num_rows($resultado)>0)
+                                    {
+                                        echo "
+                                        <table class='table table-hover'>
+                                        <thead>
+                                            <th>ID</th>
+                                            <th>Usuario</th>
+                                            <th>Contraseña</th>
+                                            <th>Rol</th>
+                                            <th> </th>
+                                        </thead>";
+
+                                        while($registro = mysql_fetch_array($resultado))
+                                        {
+                                            echo "
                                             <tr>
-                                                <td>1</td>
-                                                <td>Admin</td>
-                                                <td>Admin123</td>
-                                                <td>1</td>
-                                                <td>1</td>
-                                                <td style="width:150px;">
-                                                    <a href="#" class="btn btn-sm btn-warning">Editar</a>  <!--EDITAR RUTA: ../assets/crud/editar.php-->
-                                                    <a href="#" id="eliminar" class="btn btn-sm btn-danger">Eliminar</a> <!-- id="del-<?php echo $r["id"];?>" -->
-                                                    <script>
-                                                    $("#del-"+<?php echo $r["id"];?>).click(function(e){
-                                                        e.preventDefault();
-                                                        p = confirm("Estas seguro?");
-                                                        if(p){
-                                                            window.location="#"+<?php echo $r["id"];?>;
-
-                                                        }
-
-                                                    });
-                                                    </script>
+                                                <td>".$registro['idusuario']."</td>
+                                                <td>".$registro['usuario']."</td>
+                                                <td>".$registro['contrasena']."</td>
+                                                <td>".$registro['rol']."</td>
+                                                <td style='width:150px;'>
+                                                <a href='#' id='ed-".$registro['idusuario']."' class='btn btn-sm btn-warning'>Editar</a>
+                                                <script>
+                                                $('#ed-".$registro['idusuario']."').click(function(e){
+                                                    e.preventDefault();
+                                                    p = confirm('Estas seguro?');
+                                                    if(p){
+                                                        window.location='./frmActualizaUsuario.php?id=".$registro['idusuario']."';
+                                                    }
+                                                });
+                                                </script>
+                                                
+                                                <a href='#'' id='del-".$registro['idusuario']."' class='btn btn-sm btn-danger'>Eliminar</a>
+                                                <script>
+                                                $('#del-".$registro['idusuario']."').click(function(e){
+                                                    e.preventDefault();
+                                                    p = confirm('Estas seguro?');
+                                                    if(p){
+                                                        window.location='./eliminarUsuario.php?id=".$registro['idusuario']."';
+                                                    }
+                                                });
+                                                </script>
                                                 </td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>MinervaHooper</td>
-                                                <td>123</td>
-                                                <td>1</td>
-                                                <td>1</td>
-                                                <td style="width:150px;">
-                                                    <a href="#" class="btn btn-sm btn-warning">Editar</a>  <!--EDITAR RUTA: ../assets/crud/editar.php-->
-                                                    <a href="#" id="eliminar" class="btn btn-sm btn-danger">Eliminar</a> <!-- id="del-<?php echo $r["id"];?>" -->
-                                                    <script>
-                                                    $("#del-"+<?php echo $r["id"];?>).click(function(e){
-                                                        e.preventDefault();
-                                                        p = confirm("Estas seguro?");
-                                                        if(p){
-                                                            window.location="#"+<?php echo $r["id"];?>;
+                                            </tr> ";//fin echo
+                                        }    
+                                        echo "</table>";
+                                    }else{
+                                        echo "<p class='alert alert-warning'>No hay resultados</p>";
+                                    }
 
-                                                        }
+                                    ?>
 
-                                                    });
-                                                    </script>
-                                                </td>
-                                            </tr>
-
-                                        </tbody>
-                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+
+            <!-- Modal -->
+      <div class='modal fade' id='myModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+        <div class='modal-dialog'>
+          <div class='modal-content'>
+            <div class='modal-header'>
+              <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+              <h4 class='modal-title'>Agregar</h4>
+            </div>
+            <div class='modal-body'>
+    <form role='form' method='post' action='php/agregar.php'>
+      <div class='form-group'>
+        <label for='idact'>id</label>
+        <input type='text' class='form-control' name='idact' required readonly value="<?php echo $registro['idusuario'] ?>">
+      </div>
+      <div class='form-group'>
+        <label for='usuarioact'>Usuario</label>
+        <input type='text' class='form-control' name='usuarioact' required>
+      </div>
+      <div class='form-group'>
+        <label for='contrasenaact'>Contraseña</label>
+        <input type='text' class='form-control' name='contrasenaact' required>
+      </div>
+      <div class='form-group'>
+        <label for='rolact'>Rol</label>
+        <input type='email' class='form-control' name='rolact' >
+      </div>
+
+      <button type='submit' class='btn btn-default'>Agregar</button>
+    </form>
+            </div>
+
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
             <footer class="footer">
                 <div class="container-fluid">
                     <p class="copyright pull-right">
@@ -249,7 +313,7 @@
     </div>
 </body>
 <!--   Core JS Files   -->
-<script src="../assets/js/jquery-3.2.1.min.js" type="text/javascript"></script>
+
 <script src="../assets/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="../assets/js/material.min.js" type="text/javascript"></script>
 <!--  Charts Plugin -->
@@ -257,7 +321,7 @@
 <!--  Dynamic Elements plugin -->
 <script src="../assets/js/arrive.min.js"></script>
 <!--  PerfectScrollbar Library -->
-<script src="../assets/js/perfect-scrollbar.jquery.min.js"></script>
+
 <!--  Notifications Plugin    -->
 <script src="../assets/js/bootstrap-notify.js"></script>
 <!--  Google Maps Plugin    -->

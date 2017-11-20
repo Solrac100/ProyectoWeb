@@ -13,5 +13,5 @@
 	$maestro='M';
 	$prefecto='P';
 
-	session_start();
+	//session_start();
 ?>

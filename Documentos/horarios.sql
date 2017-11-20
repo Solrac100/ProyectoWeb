@@ -24,7 +24,7 @@ USE `mydb` ;
 DROP TABLE IF EXISTS `horarios`.`usuario` ;
 
 CREATE TABLE IF NOT EXISTS `horarios`.`usuario` (
-  `idusuario` INT NOT NULL,
+  `idusuario` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NOT NULL,
   `contrasena` VARCHAR(50) NOT NULL,
   `rol` VARCHAR(1) NOT NULL,
@@ -38,7 +38,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `horarios`.`trabajador` ;
 
 CREATE TABLE IF NOT EXISTS `horarios`.`trabajador` (
-  `idtrabajador` INT NOT NULL,
+  `idtrabajador` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(25) NOT NULL,
   `apellidos` VARCHAR(35) NOT NULL,
   `celular` VARCHAR(13) NULL,
@@ -61,7 +61,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `horarios`.`grupo` ;
 
 CREATE TABLE IF NOT EXISTS `horarios`.`grupo` (
-  `idgrupo` INT NOT NULL,
+  `idgrupo` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(4) NOT NULL,
   `salon` VARCHAR(4) NOT NULL,
   `piso` VARCHAR(1) NOT NULL,
@@ -75,7 +75,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `horarios`.`alumno` ;
 
 CREATE TABLE IF NOT EXISTS `horarios`.`alumno` (
-  `idalumno` INT NOT NULL,
+  `idalumno` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(25) NOT NULL,
   `apellidos` VARCHAR(35) NOT NULL,
   `idgrupo` INT NOT NULL,
@@ -103,7 +103,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `horarios`.`periodo` ;
 
 CREATE TABLE IF NOT EXISTS `horarios`.`periodo` (
-  `idperiodo` INT NOT NULL,
+  `idperiodo` INT NOT NULL AUTO_INCREMENT,
   `tipo` VARCHAR(1) NOT NULL,
   `ano` VARCHAR(4) NOT NULL,
   PRIMARY KEY (`idperiodo`))
@@ -116,7 +116,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `horarios`.`materia` ;
 
 CREATE TABLE IF NOT EXISTS `horarios`.`materia` (
-  `idmateria` INT NOT NULL,
+  `idmateria` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idmateria`))
 ENGINE = InnoDB;
@@ -128,7 +128,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `horarios`.`clase` ;
 
 CREATE TABLE IF NOT EXISTS `horarios`.`clase` (
-  `idclase` INT NOT NULL,
+  `idclase` INT NOT NULL AUTO_INCREMENT,
   `idalumno` INT NOT NULL,
   `idgrupo` INT NOT NULL,
   `idtrabajador` INT NOT NULL,
@@ -170,7 +170,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `horarios`.`asisAlumno` ;
 
 CREATE TABLE IF NOT EXISTS `horarios`.`asisAlumno` (
-  `idasisAlumno` INT NOT NULL,
+  `idasisAlumno` INT NOT NULL AUTO_INCREMENT,
   `idclase` INT NOT NULL,
   `idperiodo` INT NOT NULL,
   `hora` VARCHAR(9) NOT NULL,
@@ -192,7 +192,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `horarios`.`asisTrabajador` ;
 
 CREATE TABLE IF NOT EXISTS `horarios`.`asisTrabajador` (
-  `idasisTrabajador` INT NOT NULL,
+  `idasisTrabajador` INT NOT NULL AUTO_INCREMENT,
   `idclase` INT NOT NULL,
   `idperiodo` INT NOT NULL,
   `hora` VARCHAR(9) NOT NULL,
