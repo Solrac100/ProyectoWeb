@@ -1,4 +1,3 @@
-<<<<<<< HEAD:App/admin/grupo.php
 <!-- <?php
 session_start();
     if(empty($_SESSION['usr'])){
@@ -21,7 +20,6 @@ if (isset($_GET['logout'])) {
     }
 ?> -->
 <?php include("./header.php"); ?>
->>>>>>> 3720f94a45e889dfe5ad61fc72db479673baadce:App/admin/grupo.php
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">
@@ -172,6 +170,5 @@ if (isset($_GET['logout'])) {
       <button type='submit' class='btn btn-default'>Agregar</button>
     </form>
             </div>
-<<<<<<< HEAD:App/admin/grupo.php
 <?php include("./footer.php"); ?>
->>>>>>> 3720f94a45e889dfe5ad61fc72db479673baadce:App/admin/grupo.php
+
