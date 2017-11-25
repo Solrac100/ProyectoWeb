@@ -19,45 +19,57 @@ if (isset($_GET['logout'])) {
         }
     }
 ?> -->
-<?php include("./header.php"); ?>
+<?php include("../header.php"); ?>
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-8">
                             <div class="card">
                                 <div class="card-header" data-background-color="red">
-                                    <h4 class="title">Usuarios</h4>
-                                    <p class="category">Datos del Usuario</p>
+                                    <h4 class="title">Trabajador</h4>
+                                    <p class="category">Datos del trabajador</p>
                                 </div>
                                 <div class="card-content">
-                                    <form action="insertarUsuario.php" method="post">
-                                         <div class="row">
-                                            <div class="col-md-4">
+                                    <form action="insertarTrabajador.php" method="post">
+                                        <div class="row">
+                                            <div class="col-md-12">
                                                 <div class="form-group label-floating">
-                                                    <label class="control-label">Usuario</label>
-                                                    <input type="text" class="form-control" id="usuario" name="usuario">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group label-floating">
-                                                    <label class="control-label">Contraseña</label>
-                                                    <input type="text" class="form-control" id="contraseña" name="contraseña">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group label-floating">
-                                                    <label class="control-label">Rol</label>
-                                                    <select class="form-control" id="rol" name="rol">
-                                                        <option disabled="disabled" selected="selected"></option>
-                                                        <option value="A">Administrador</option>
-                                                        <option value="J">Jefe de Grupo</option>
-                                                        <option value="M">Maestro</option>
-                                                        <option value="P">Prefecto</option>
-                                                    </select>
+                                                    <label class="control-label">Nombre(s)</label>
+                                                    <input type="text" class="form-control" id="nombres" name="nombres">
                                                 </div>
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-primary pull-right">Inserta usuario</button>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group label-floating">
+                                                    <label class="control-label">Apellidos(s)</label>
+                                                    <input type="text" class="form-control" id="apellidos" name="apellidos">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group label-floating">
+                                                    <label class="control-label">Celular</label>
+                                                    <input type="text" class="form-control" id="telefono" name="telefono">
+                                                </div>
+                                            </div>                                          
+                                           <div class="col-md-6">
+                                                <div class="form-group label-floating">
+                                                    <label class="control-label">Correo</label>
+                                                    <input type="email" class="form-control" id="correo" name="correo">
+                                                </div>
+                                            </div>    
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div >
+                                                    <label >Seleccionar imagen...</label>
+                                                    <input accept="image/*"  type="file" capture id="seleccionaimagen" name="seleccionaimagen"> <!-- abre la camara en caso de ser un disposituvo móvil -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary pull-right">Insertar trabajador</button>
                                         <div class="clearfix"></div>
                                     </form>
                                 </div>
@@ -72,11 +84,11 @@ if (isset($_GET['logout'])) {
                         <div class="col-md-12">
                             <div class="card card-plain">
                                 <div class="card-header" data-background-color="red">
-                                    <h4 class="title">Usuarios registrados</h4>
-                                    <p class="category">Modificación / eliminación de usuarios</p>
+                                    <h4 class="title">Trabajadores registrados</h4>
+                                    <p class="category">Modificación / eliminación de trabajadores</p>
                                 </div>
                                 <div class="collapse navbar-collapse navbar-ex1-collapse"><!--Div buscar-->
-                                    <form class="navbar-form navbar-left" role="search" action="../assets/crud/buscar.php">
+                                    <form class="navbar-form navbar-left" role="search" action="../../assets/crud/buscar.php">
                                         <div class="form-group">
                                             <input type="text" name="s" class="form-control" placeholder="Buscar">
                                         </div>
@@ -87,9 +99,9 @@ if (isset($_GET['logout'])) {
                                     <?php
                                         error_reporting(0);
 
-                                    include "../Conexion/conexion.php";
+                                    include "../../Conexion/conexion.php";
 
-                                    $qry= "SELECT * FROM usuario";
+                                    $qry= "SELECT * FROM trabajador";
                                     $resultado = mysql_query($qry) or die ("*****ERROR: " .mysql_error());
 
                                     if(mysql_num_rows($resultado)>0)
@@ -98,9 +110,12 @@ if (isset($_GET['logout'])) {
                                         <table class='table table-hover'>
                                         <thead>
                                             <th>ID</th>
-                                            <th>Usuario</th>
-                                            <th>Contraseña</th>
-                                            <th>Rol</th>
+                                            <th>Nombre</th>
+                                            <th>Apellidos</th>
+                                            <th>Celular</th>
+                                            <th>Correo</th>
+                                            <th>Eliminado</th>
+                                            <th>ID Usuario</th>
                                             <th> </th>
                                         </thead>";
 
@@ -108,29 +123,32 @@ if (isset($_GET['logout'])) {
                                         {
                                             echo "
                                             <tr>
-                                                <td>".$registro['idusuario']."</td>
-                                                <td>".$registro['usuario']."</td>
-                                                <td>".$registro['contrasena']."</td>
-                                                <td>".$registro['rol']."</td>
+                                                <td>".$registro['idtrabajador']."</td>
+                                                <td>".$registro['nombre']."</td>
+                                                <td>".$registro['apellidos']."</td>
+                                                <td>".$registro['celular']."</td>
+                                                <td>".$registro['correo']."</td>
+                                                <td>".$registro['fechaelim']."</td>
+                                                <td>".$registro['usuario_idusuario']."</td>
                                                 <td style='width:150px;'>
-                                                <a href='#' id='ed-".$registro['idusuario']."' class='btn btn-sm btn-warning'>Editar</a>
+                                                <a href='#' id='ed-".$registro['idtrabajador']."' class='btn btn-sm btn-warning'>Editar</a>
                                                 <script>
-                                                $('#ed-".$registro['idusuario']."').click(function(e){
+                                                $('#ed-".$registro['idtrabajador']."').click(function(e){
                                                     e.preventDefault();
                                                     p = confirm('Estas seguro?');
                                                     if(p){
-                                                        window.location='./frmActualizaUsuario.php?id=".$registro['idusuario']."';
+                                                        window.location='./frmActualizaTrabajador.php?id=".$registro['idtrabajador']."';
                                                     }
                                                 });
                                                 </script>
                                                 
-                                                <a href='#'' id='del-".$registro['idusuario']."' class='btn btn-sm btn-danger'>Eliminar</a>
+                                                <a href='#'' id='del-".$registro['idtrabajador']."' class='btn btn-sm btn-danger'>Eliminar</a>
                                                 <script>
-                                                $('#del-".$registro['idusuario']."').click(function(e){
+                                                $('#del-".$registro['idtrabajador']."').click(function(e){
                                                     e.preventDefault();
                                                     p = confirm('Estas seguro?');
                                                     if(p){
-                                                        window.location='./eliminarUsuario.php?id=".$registro['idusuario']."';
+                                                        window.location='./eliminarTrabajador.php?id=".$registro['idtrabajador']."';
                                                     }
                                                 });
                                                 </script>
@@ -186,4 +204,4 @@ if (isset($_GET['logout'])) {
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
-<?php include("./footer.php"); ?>
+<?php include("../footer.php"); ?>

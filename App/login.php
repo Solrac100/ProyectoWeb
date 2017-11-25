@@ -10,6 +10,8 @@
 	
 	$tablauser = mysql_fetch_array($resultado);
 	
+	$_SESSION['ID']= $tablauser['idusuario']; 
+	$_SESSION['USER']= $tablauser['usuario']; 
 	$rol = $tablauser['rol']; 
 	
 	if($rol == $admin){
