@@ -67,7 +67,7 @@
                         </a>
                     </li>                    
                     <li>
-                        <a href="/admin/clase.php">
+                        <a href="/admin/clase/">
                             <i class="material-icons">description</i>
                             <p>Clase</p>
                         </a>
