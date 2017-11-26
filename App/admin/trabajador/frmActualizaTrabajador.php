@@ -47,7 +47,7 @@ error_reporting(0);
 				                <div class='card'>
 				                    <div class='card-header' data-background-color='red'>
 				                        <h4 class='title'>Modificando Trabajador</h4>
-				                        <p class='category'>Datos del Usuario</p>
+				                        <p class='category'>Datos del Trabajador</p>
 				                    </div>
 				                	<div class='card-content'>
 				     		       		 <form action='actualizaTrabajador.php' method='post'>

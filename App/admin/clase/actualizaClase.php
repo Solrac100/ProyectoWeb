@@ -3,7 +3,7 @@ error_reporting(0);
 if(!empty($_POST)){
 	include "../../Conexion/conexion.php";
 
-	$idclase = $_POST['idclase']
+	$idclase = $_POST['id'];
 	$alumno = $_POST['alumno'];
 	$grupo = $_POST['grupo'];
 	$trabajador = $_POST['trabajador'];
