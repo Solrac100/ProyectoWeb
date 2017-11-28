@@ -1,7 +1,7 @@
 <?php
 	$hostBD='localhost';
-	$userBD='root';
-	$passBD='asd';
+	$userBD='admin';
+	$passBD='admin';
 	$BD='horarios';
 
 	$conexionBD = mysql_connect($hostBD,$userBD,$passBD)
