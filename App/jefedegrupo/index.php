@@ -1,3 +1,42 @@
+<?php
+  error_reporting(0);//sale el error de que mysql ya se hará obsoleto
+  include("../Conexion/conexion.php");
+
+  $id = "2";
+  $diahoy = date("D",time());
+  switch ($diahoy) {
+    case 'Mon':
+      $hoy = "Lunes";
+      break;
+    case 'Tue':
+      $hoy = "Martes";
+      break;
+    
+    default:
+      # code...
+      break;
+  }
+
+
+
+  $qry = "SELECT c.* FROM alumno a,usuario u,clase c where a.idalumno=c.idalumno and u.idusuario=a.usuario_idusuario and u.idusuario = ".$id." and c.dia='".$hoy."' ORDER by 'hora' ";
+  //echo $qry;
+  $res = mysql_query($qry) or die ("*****ERROR AL TRAER CLASE: " .mysql_error());
+
+  
+  while($jefe = mysql_fetch_array($res)){
+  $alumno=$jefe['idalumno'];
+  $grupo=$jefe['idgrupo'];
+  $periodo=$jefe['periodo_idperiodo'];
+  $trabajador[]=$jefe['idTrabajador'];
+  $materia[]=$jefe['materia_idmateria'];
+  
+  }
+
+   //echo $trabajador[0];
+  
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>

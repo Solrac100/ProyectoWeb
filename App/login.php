@@ -17,7 +17,7 @@
 	if($rol == $admin){
 		header("Location: ./admin");
  	}else if($rol == $jefe){
- 		header("Location: ./jefe");
+ 		header("Location: ./jefedegrupo");
  	}else if($rol == $maestro){
  		header("Location: ./maestro");
  	}else if($rol == $prefecto){

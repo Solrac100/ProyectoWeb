@@ -13,6 +13,5 @@
 	$maestro='M';
 	$prefecto='P';
 
-	$fecha=date("d/m/Y h:i");
 	//session_start();
 ?>
