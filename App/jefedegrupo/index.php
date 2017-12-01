@@ -12,16 +12,16 @@
       $hoy = "Martes";
       break;
     case 'Wed':
-      $hoy = "Martes";
+      $hoy = "Miercoles";
       break;
     case 'Thu':
-      $hoy = "Martes";
+      $hoy = "Jueves";
       break;
     case 'Fri':
-      $hoy = "Martes";
+      $hoy = "Viernes";
       break;
     case 'Sat':
-      $hoy = "Martes";
+      $hoy = "Sabado";
       break;
   }
 
@@ -67,7 +67,7 @@
     $mat4 = mysql_query("SELECT nombre FROM materia WHERE idmateria = '".$materia[3]."'") or die ("*****ERROR AL TRAER Mat4: " .mysql_error());
     $maes4 = mysql_query("SELECT concat(nombre,' ',apellidos) FROM trabajador WHERE idtrabajador = '".$trabajador[3]."'") or die ("*****ERROR AL TRAER maes4: " .mysql_error()); 
   }
-
+   
   
 
   $cont=0;
@@ -209,10 +209,11 @@
              case '2': $maestros = mysql_result($maes3,0);$materias = mysql_result($mat3,0);break;
              case '3': $maestros = mysql_result($maes4,0);$materias = mysql_result($mat4,0);break;
            }
+
     //if ($hora[0] == "07:45 a.m") {?>
       		<div class="panel-heading">
         		<h4 class="panel-title">
-          			<a data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $cont+1; ?>"><?php echo $hora[0+$cont]; ?></a>
+          			<a data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $cont+1; ?>"><?php echo $hora[$cont]; ?></a>
         		</h4>
       		</div>
       		<div id="collapse<?php echo $cont+1; ?>" class="panel-collapse collapse"><!-- se le agrega "in" para que se la que se abre por default-->
@@ -225,7 +226,7 @@
       					<div class="informacion" id="informacion">
       						<p >
       							<strong>ID:</strong>
-      								<input type="text" readonly value="<?php echo $clase[0+$cont]; ?>" style="border:none; width:50px;">
+      								<input type="text" readonly value="<?php echo $clase[$cont]; ?>" style="border:none; width:50px;">
       						</p>
       						<p style="visibility:hidden">
       							<strong>Hora: </strong>
@@ -304,48 +305,8 @@
 					     </form>
       			</div>
       		</div>
-          <?php $cont++; } //} ?>
+          <?php  $cont++; } //} ?>
     	</div>
-     
-   <!--
-    	<div class="panel panel-default">
-    	  	<div class="panel-heading">
-	        	<h4 class="panel-title">
-          			<a data-toggle="collapse" data-parent="#accordion" href="#collapse2">9:15 A.M.</a>
-        		</h4>
-      		</div>
-      		<div id="collapse2" class="panel-collapse collapse">
-	        	<div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-        		sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
-      		</div>
-    	</div>
-    
-    	<div class="panel panel-default">
-      		<div class="panel-heading">
-        			<h4 class="panel-title">
-          				<a data-toggle="collapse" data-parent="#accordion" href="#collapse3">11:05 A.M.</a>
-        			</h4>
-      		</div>
-      		<div id="collapse3" class="panel-collapse collapse">
-        		<div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-        		sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
-      		</div>
-    	</div>
-    
-    	<div class="panel panel-default">
-      		<div class="panel-heading">
-        			<h4 class="panel-title">
-          				<a data-toggle="collapse" data-parent="#accordion" href="#collapse4">12:30 P.M.</a>
-        			</h4>
-      		</div>
-      		<div id="collapse4" class="panel-collapse collapse">
-		        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-        		sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
-      		</div>
-    	</div> -->
   	</div>
 </div>
 </body>
