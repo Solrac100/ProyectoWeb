@@ -9,6 +9,7 @@
   
   $dia=array('Lunes','Martes','Miercoles','Jueves','Viernes','Sabado');
   $hora=array('07:45 a.m','09:15 a.m','11:05 a.m','12:30 p.m');
+
 ?>
 
 <!DOCTYPE html>
@@ -44,7 +45,6 @@
                     </tr>
                   </thead>
                   <tbody>
-                    
                      <?php
                      for($i=0;$i<count($hora);$i++){
                         echo "<tr><td>";
@@ -54,9 +54,16 @@
                               {
                                   $clase=mysql_query("SELECT * from clase WHERE dia='".$dia[$j]."' and hora='".$hora[$i]."' ");
                                   $claserow = mysql_fetch_row($clase);
+                                  
+                                  $trab=mysql_query("SELECT concat(nombre,' ',apellidos) as nombre from trabajador WHERE idtrabajador='".$claserow[3]."' ");
+                                  $trabrow = mysql_fetch_row($trab);
+                                  
+                                  $mat=mysql_query("SELECT nombre from materia WHERE idmateria='".$claserow[7]."' ");
+                                  $matrow = mysql_fetch_row($mat);
+
                                   echo "<td> ";
-                                  echo "<input type='text' readonly name='trabajador' value='".$claserow[3]."'>";
-                                  echo "<input type='text' readonly name='materia' value='".$claserow[7]."'>";
+                                  echo "<input type='text' readonly name='trabajador' value='".$trabrow[0]."'>";
+                                  echo "<input type='text' readonly name='materia' value='".$matrow[0]."'>";
                                   echo"</td>";
                                }
                         echo "</tr>";
