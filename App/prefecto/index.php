@@ -1,3 +1,77 @@
+<?php
+  error_reporting(0);//sale el error de que mysql ya se hará obsoleto
+  include("../Conexion/conexion.php");
+
+  $id = "2";
+  $diahoy = date("D",time());
+  switch ($diahoy) {
+    case 'Mon':
+      $hoy = "Lunes";
+      break;
+    case 'Tue':
+      $hoy = "Martes";
+      break;
+    case 'Wed':
+      $hoy = "Miercoles";
+      break;
+    case 'Thu':
+      $hoy = "Jueves";
+      break;
+    case 'Fri':
+      $hoy = "Viernes";
+      break;
+    case 'Sat':
+      $hoy = "Sabado";
+      break;
+  }
+
+  $qry = "SELECT c.* FROM alumno a,usuario u,clase c where a.idalumno=c.idalumno and u.idusuario=a.usuario_idusuario and u.idusuario = ".$id." and c.dia='".$hoy."' ORDER by hora ";
+  //echo $qry;
+  $res = mysql_query($qry) or die ("*****ERROR AL TRAER CLASE: " .mysql_error());
+
+  
+  while($jefe = mysql_fetch_array($res)){
+    $alumno=$jefe['idalumno'];
+    $grupo=$jefe['idgrupo'];
+    $periodo=$jefe['periodo_idperiodo'];
+    $trabajador[]=$jefe['idtrabajador'];
+    $materia[]=$jefe['materia_idmateria'];
+    $hora[]=$jefe['hora'];
+    $clase[]=$jefe['idclase'];
+  }
+
+   //print_r($hora);
+  
+  $alum = mysql_query("SELECT concat(nombre,' ',apellidos) as nombre FROM alumno WHERE idalumno = '".$alumno."'") or die ("*****ERROR AL TRAER alumno: " .mysql_error());
+  $grupqry = mysql_query("SELECT nombre,salon,piso FROM grupo WHERE idgrupo = '".$grupo."'") or die ("*****ERROR AL TRAER grupo: " .mysql_error());
+  $perioqry = mysql_query("SELECT tipo,ano FROM periodo WHERE idperiodo = '".$periodo."'") or die ("*****ERROR AL TRAER grupo: " .mysql_error());
+
+  $grup = mysql_fetch_row($grupqry);
+  $perio = mysql_fetch_row($perioqry);
+
+  if ($hora[0] == "07:45 a.m") {
+    $mat1 = mysql_query("SELECT nombre FROM materia WHERE idmateria = '".$materia[0]."'") or die ("*****ERROR AL TRAER Mat1: " .mysql_error());
+    $maes1 = mysql_query("SELECT concat(nombre,' ',apellidos) FROM trabajador WHERE idtrabajador = '".$trabajador[0]."'") or die ("*****ERROR AL TRAER maes1: " .mysql_error()); 
+  }
+  if ($hora[1] == "09:15 a.m") {
+    $mat2 = mysql_query("SELECT nombre FROM materia WHERE idmateria = '".$materia[1]."'") or die ("*****ERROR AL TRAER Mat2: " .mysql_error());
+    $maes2 = mysql_query("SELECT concat(nombre,' ',apellidos) FROM trabajador WHERE idtrabajador = '".$trabajador[1]."'") or die ("*****ERROR AL TRAER maes2: " .mysql_error()); 
+  }
+  if ($hora[2] == "11:05 a.m") {
+    $mat3 = mysql_query("SELECT nombre FROM materia WHERE idmateria = '".$materia[2]."'") or die ("*****ERROR AL TRAER Mat3: " .mysql_error());
+    $maes3 = mysql_query("SELECT concat(nombre,' ',apellidos) FROM trabajador WHERE idtrabajador = '".$trabajador[2]."'") or die ("*****ERROR AL TRAER maes3: " .mysql_error()); 
+  }
+  if ($hora[3] == "12:30 p.m") {
+    $mat4 = mysql_query("SELECT nombre FROM materia WHERE idmateria = '".$materia[3]."'") or die ("*****ERROR AL TRAER Mat4: " .mysql_error());
+    $maes4 = mysql_query("SELECT concat(nombre,' ',apellidos) FROM trabajador WHERE idtrabajador = '".$trabajador[3]."'") or die ("*****ERROR AL TRAER maes4: " .mysql_error()); 
+  }
+   
+  
+
+  $cont=0;
+?>
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -114,12 +188,20 @@
   	<p><strong>Instrucciones:</strong> El pase de lista se le hará al <strong>maestro.</p>
   	<div class="panel-group" id="accordion">
 	    <div class="panel panel-default">
+        <?php while ($cont < 4) {
+           switch ($cont) {
+             case '0': $maestros = mysql_result($maes1,0);$materias = mysql_result($mat1,0);break;
+             case '1': $maestros = mysql_result($maes2,0);$materias = mysql_result($mat2,0);break;
+             case '2': $maestros = mysql_result($maes3,0);$materias = mysql_result($mat3,0);break;
+             case '3': $maestros = mysql_result($maes4,0);$materias = mysql_result($mat4,0);break;
+           }
+           ?>
       		<div class="panel-heading">
         		<h4 class="panel-title">
-          			<a data-toggle="collapse" data-parent="#accordion" href="#collapse1">7:45 A.M.</a>
+          			<a data-toggle="collapse" data-parent="#accordion<?php echo $cont+1; ?>"><?php echo $hora[$cont]; ?></a>
         		</h4>
       		</div>
-      		<div id="collapse1" class="panel-collapse collapse"><!-- se le agrega "in" para que se la que se abre por default-->
+      		<div id="collapse<?php echo $cont+1; ?>" class="panel-collapse collapse"><!-- se le agrega "in" para que se la que se abre por default-->
       			<div class="panel-body">
               <form> <!--form buscar-->
                 <div class="input-group">
@@ -139,41 +221,41 @@
       					<div class="informacion" id="informacion">
       						<p>
       							<strong>ID: </strong>
-      								<input type="text" readonly value="X" style="border:none; width:50px;">
+      								<input type="text" readonly value="<?php echo $clase[$cont]; ?>" style="border:none; width:50px;">
       						</p>
-      						<p>
+      						<p style="visibility:hidden">
       							<strong>Hora: </strong>
       								<input type="text" readonly value="00:00" style="border:none; width:70px;" id="hora">
       						</p>
-      						<p>
+      						<p style="visibility:hidden">
       							<strong>Día: </strong>
       								<input type="text" readonly style="border:none; width:100px;" id="dia">
       						</p>
 	      					<p>
 	      						<strong>Maestro: </strong>
-	      							<input type="text" readonly value="Lorem ipsum dolor sit amet." style="border:none; width:250px;">
+	      							<input type="text" readonly value="<?php echo $maestros; ?>" style="border:none; width:250px;">
 	      					</p>
     	  					<p>
     	  						<strong>Materia: </strong>
-    	  							<input type="text" readonly value="Lorem ipsum dolor sit amet." style="border:none; width:250px;">
+    	  							<input type="text" readonly value="<?php echo $materias; ?>" style="border:none; width:250px;">
     	  					</p>
       						<p>
       							<strong>Salón: </strong>
-      								<input type="text" readonly value="Lorem ipsum dolor sit amet." style="border:none; width:250px;">
+      								<input type="text" readonly value="<?php echo $grup[1]; ?>" style="border:none; width:250px;">
       						</p>
       						<p>
       							<strong>Grupo: </strong>
-      								<input type="text" readonly value="Lorem ipsum dolor sit amet." style="border:none; width:250px;">
+      								<input type="text" readonly value="<?php echo $grup[0]; ?>" style="border:none; width:250px;">
       						</p>
       						<p>
       							<strong>Ubicación: </strong>
-      								<input type="text" readonly value="Lorem ipsum dolor sit amet." style="border:none; width:250px;">
+      								<input type="text" readonly value="<?php echo $grup[2]; ?>" style="border:none; width:250px;">
       						</p>
-      						<p>
+      						<p style="visibility:hidden">
       							<strong>Clase: </strong><input type="text" readonly value="Lorem ipsum dolor sit amet." style="border:none; width:250px;">
       						</p>
       						<p>
-      							<strong>Periodo: </strong><input type="text" readonly value="Lorem ipsum dolor sit amet." style="border:none; width:250px;">
+      							<strong>Periodo: </strong><input type="text" readonly value="<?php echo $perio[0].' '.$perio[1]; ?>" style="border:none; width:250px;">
       						</p>
       						<i class="fa fa-check-circle angulo" aria-hidden="true" onclick="asmaestrosi()"></i>
       						<i class="fa fa-times-circle tacha" aria-hidden="true" onclick="asmaestrono()"></i>
@@ -182,45 +264,6 @@
       					<input type="submit" name="enviar" id="enviar" class="btn btn-primary pull-right enviar" value="ENVIAR ASISTENCIA MAESTRO">
       				</form>
       			</div>
-      		</div>
-    	</div>
-    
-    	<div class="panel panel-default">
-    	  	<div class="panel-heading">
-	        	<h4 class="panel-title">
-          			<a data-toggle="collapse" data-parent="#accordion" href="#collapse2">9:15 A.M.</a>
-        		</h4>
-      		</div>
-      		<div id="collapse2" class="panel-collapse collapse">
-	        	<div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-        		sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
-      		</div>
-    	</div>
-    
-    	<div class="panel panel-default">
-      		<div class="panel-heading">
-        			<h4 class="panel-title">
-          				<a data-toggle="collapse" data-parent="#accordion" href="#collapse3">11:05 A.M.</a>
-        			</h4>
-      		</div>
-      		<div id="collapse3" class="panel-collapse collapse">
-        		<div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-        		sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
-      		</div>
-    	</div>
-    
-    	<div class="panel panel-default">
-      		<div class="panel-heading">
-        			<h4 class="panel-title">
-          				<a data-toggle="collapse" data-parent="#accordion" href="#collapse4">12:30 P.M.</a>
-        			</h4>
-      		</div>
-      		<div id="collapse4" class="panel-collapse collapse">
-		        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-        		sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
       		</div>
     	</div>
   	</div> 
