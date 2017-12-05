@@ -26,18 +26,26 @@
   }
 
   $qry = "SELECT c.* FROM alumno a,usuario u,clase c where a.idalumno=c.idalumno and u.idusuario=a.usuario_idusuario and u.idusuario = ".$id." and c.dia='".$hoy."' ORDER by hora ";
+
+  $qry2 = "SELECT trabajador.idtrabajador, clase.hora, clase.dia, trabajador.nombre as maestro, materia.nombre, grupo.salon, grupo.nombre as gruponombre ,grupo.piso, clase.idclase, periodo.idperiodo from clase, grupo, trabajador, periodo, materia where clase.idgrupo = grupo.idgrupo and clase.idtrabajador = trabajador.idtrabajador and clase.periodo_idperiodo = periodo.idperiodo and clase.materia_idmateria = materia.idmateria and clase.dia = '".$hoy."' order by salon";
   //echo $qry;
-  $res = mysql_query($qry) or die ("*****ERROR AL TRAER CLASE: " .mysql_error());
+  $res = mysql_query($qry2) or die ("*****ERROR AL TRAER CLASE: " .mysql_error());
 
   
-  while($jefe = mysql_fetch_array($res)){
-    $alumno=$jefe['idalumno'];
-    $grupo=$jefe['idgrupo'];
-    $periodo=$jefe['periodo_idperiodo'];
-    $trabajador[]=$jefe['idtrabajador'];
-    $materia[]=$jefe['materia_idmateria'];
-    $hora[]=$jefe['hora'];
-    $clase[]=$jefe['idclase'];
+  while($result = mysql_fetch_array($res)){
+    $idmaestro=$result['idalumno'];
+    $hora[]=$result['hora'];
+    $dia=$result['dia'];
+    $maestro=$result['maestro'];
+    $materia=$result['nombre'];
+    $salon=$result['salon'];
+    $gruponombre=$result['gruponombre'];//jhkjhkjhkjhkjhkjhkjhkjhkjhkjh
+    $piso=$result['piso'];
+    $idclase[]=$result['idclase'];
+    $idperiodo=$result['idperiodo'];
+
+
+
   }
 
    //print_r($hora);
@@ -257,6 +265,7 @@
       						<p>
       							<strong>Periodo: </strong><input type="text" readonly value="<?php echo $perio[0].' '.$perio[1]; ?>" style="border:none; width:250px;">
       						</p>
+                  <?php } ?>
       						<i class="fa fa-check-circle angulo" aria-hidden="true" onclick="asmaestrosi()"></i>
       						<i class="fa fa-times-circle tacha" aria-hidden="true" onclick="asmaestrono()"></i>
       						<input type="text" readonly value="" name="asistenciamaestro" id="asistenciamaestro" style="width: 30px;">
