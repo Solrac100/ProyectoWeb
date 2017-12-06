@@ -94,7 +94,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/admin/reportes.php">
+                        <a href="/admin/reporte/">
                             <i class="material-icons text-gray">assignment</i>
                             <p>Reportes</p>
                         </a>
