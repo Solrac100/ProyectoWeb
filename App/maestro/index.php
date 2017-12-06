@@ -2,7 +2,8 @@
   error_reporting(0);//sale el error de que mysql ya se hará obsoleto
   include("../Conexion/conexion.php");
 
-  $id = "2";
+  $id = "3";
+
   $diahoy = date("D",time());
   switch ($diahoy) {
     case 'Mon':
@@ -25,26 +26,19 @@
       break;
   }
 
-  $qry = "SELECT c.* FROM alumno a,usuario u,clase c where a.idalumno=c.idalumno and u.idusuario=a.usuario_idusuario and u.idusuario = ".$id." and c.dia='".$hoy."' ORDER by hora ";
-
-  $qry2 = "SELECT trabajador.idtrabajador, clase.hora, clase.dia, trabajador.nombre as maestro, materia.idmateria as nombre, grupo.salon, grupo.nombre as gruponombre ,grupo.piso, clase.idclase, periodo.idperiodo, periodo.tipo as tipo, periodo.ano as ano from clase, grupo, trabajador, periodo, materia where clase.idgrupo = grupo.idgrupo and clase.idtrabajador = trabajador.idtrabajador and clase.periodo_idperiodo = periodo.idperiodo and clase.materia_idmateria = materia.idmateria and clase.dia = '".$hoy."' order by salon , hora";
-  echo $qry2;
-  $res = mysql_query($qry2) or die ("*****ERROR AL TRAER CLASE: " .mysql_error());
+  $qry = "SELECT c.* FROM trabajador t,usuario u,clase c where c.idtrabajador=t.idtrabajador and t.usuario_idusuario=u.idusuario and u.idusuario=".$id." and c.dia='".$hoy."' ORDER by hora ";
+  echo $qry;
+  $res = mysql_query($qry) or die ("*****ERROR AL TRAER CLASE: " .mysql_error());
 
   
-  while($result = mysql_fetch_array($res)){
-    $idmaestro[]=$result['idtrabajador'];
-    $hora[]=$result['hora'];
-    $dia=$result['dia'];
-    $maestro=$result['maestro'];
-    $materia[]=$result['nombre'];
-    $salon[]=$result['salon'];
-    $gruponombre[]=$result['gruponombre'];//jhkjhkjhkjhkjhkjhkjhkjhkjhkjh
-    $piso[]=$result['piso'];
-    $idclase[]=$result['idclase'];
-    $periodo[]=$result['tipo'];
-    $año[]=$result['ano'];
-    $idperiodo[]=$result['idperiodo'];
+  while($trab = mysql_fetch_array($res)){
+    $alumno=$trab['idalumno'];
+    $grupo=$trab['idgrupo'];
+    $periodo=$trab['periodo_idperiodo'];
+    $trabajador[]=$trab['idtrabajador'];
+    $materia[]=$trab['materia_idmateria'];
+    $hora[]=$trab['hora'];
+    $clase[]=$trab['idclase'];
   }
 
    //print_r($hora);
@@ -58,31 +52,31 @@
 
   if ($hora[0] == "07:45 a.m") {
     $mat1 = mysql_query("SELECT nombre FROM materia WHERE idmateria = '".$materia[0]."'") or die ("*****ERROR AL TRAER Mat1: " .mysql_error());
-    $maes1 = mysql_query("SELECT concat(nombre,' ',apellidos) FROM trabajador WHERE idtrabajador = '".$idmaestro[0]."'") or die ("*****ERROR AL TRAER maes1: " .mysql_error()); 
+    $maes1 = mysql_query("SELECT concat(nombre,' ',apellidos) FROM trabajador WHERE idtrabajador = '".$trabajador[0]."'") or die ("*****ERROR AL TRAER maes1: " .mysql_error()); 
   }
   if ($hora[1] == "09:15 a.m") {
     $mat2 = mysql_query("SELECT nombre FROM materia WHERE idmateria = '".$materia[1]."'") or die ("*****ERROR AL TRAER Mat2: " .mysql_error());
-    $maes2 = mysql_query("SELECT concat(nombre,' ',apellidos) FROM trabajador WHERE idtrabajador = '".$idmaestro[1]."'") or die ("*****ERROR AL TRAER maes2: " .mysql_error()); 
+    $maes2 = mysql_query("SELECT concat(nombre,' ',apellidos) FROM trabajador WHERE idtrabajador = '".$trabajador[1]."'") or die ("*****ERROR AL TRAER maes2: " .mysql_error()); 
   }
   if ($hora[2] == "11:05 a.m") {
     $mat3 = mysql_query("SELECT nombre FROM materia WHERE idmateria = '".$materia[2]."'") or die ("*****ERROR AL TRAER Mat3: " .mysql_error());
-    $maes3 = mysql_query("SELECT concat(nombre,' ',apellidos) FROM trabajador WHERE idtrabajador = '".$idmaestro[2]."'") or die ("*****ERROR AL TRAER maes3: " .mysql_error()); 
+    $maes3 = mysql_query("SELECT concat(nombre,' ',apellidos) FROM trabajador WHERE idtrabajador = '".$trabajador[2]."'") or die ("*****ERROR AL TRAER maes3: " .mysql_error()); 
   }
   if ($hora[3] == "12:30 p.m") {
     $mat4 = mysql_query("SELECT nombre FROM materia WHERE idmateria = '".$materia[3]."'") or die ("*****ERROR AL TRAER Mat4: " .mysql_error());
-    $maes4 = mysql_query("SELECT concat(nombre,' ',apellidos) FROM trabajador WHERE idtrabajador = '".$idmaestro[3]."'") or die ("*****ERROR AL TRAER maes4: " .mysql_error()); 
+    $maes4 = mysql_query("SELECT concat(nombre,' ',apellidos) FROM trabajador WHERE idtrabajador = '".$trabajador[3]."'") or die ("*****ERROR AL TRAER maes4: " .mysql_error()); 
   }
    
+  
+
   $cont=0;
 ?>
-
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-	<title>Prefecto</title>
+	<title>Maestro</title>
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -189,18 +183,18 @@
 
 <div class="container">
 	<img src="../assets/imagenes/logo.png" alt="Benemérita Escuela Normal de Coahuila" class="img img-responsive imagen">
-	<h2 align="center">Prefecto</h2><h3 align="center">Pase de asistencia</h3>
+	<h2 align="center">Maestro</h2><h3 align="center">Pase de lista</h3>
   	<p><strong>Instrucciones:</strong> El pase de lista se le hará al <strong>maestro.</p>
-  	<div class="panel-group" id="accordion">
+  	<input type="submit" name="mostrarhorario" id="mostrarhorario" class="btn btn-primary pull-right mostrarhorario" value="MOSTRAR MI HORARIO" style="float: right;">
+    <div class="panel-group" id="accordion" style="margin-top: 50px;">
 	    <div class="panel panel-default">
-        <?php while ($cont < 4) {
+          <?php while ($cont < 4) {
            switch ($cont) {
              case '0': $maestros = mysql_result($maes1,0);$materias = mysql_result($mat1,0);break;
              case '1': $maestros = mysql_result($maes2,0);$materias = mysql_result($mat2,0);break;
              case '2': $maestros = mysql_result($maes3,0);$materias = mysql_result($mat3,0);break;
              case '3': $maestros = mysql_result($maes4,0);$materias = mysql_result($mat4,0);break;
-           }
-           ?>
+           }?>
       		<div class="panel-heading">
         		<h4 class="panel-title">
           			<a data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $cont+1; ?>"><?php echo $hora[$cont]; ?></a>
@@ -208,33 +202,23 @@
       		</div>
       		<div id="collapse<?php echo $cont+1; ?>" class="panel-collapse collapse"><!-- se le agrega "in" para que se la que se abre por default-->
       			<div class="panel-body">
-              <form> <!--form buscar-->
-                <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Search">
-                  <div class="input-group-btn">
-                    <button class="btn btn-default" type="submit">
-                      <i class="glyphicon glyphicon-search"></i>
-                    </button>
-                  </div>
-                </div>
-              </form>
-      				<form action="./insertaasis.php" method="post"> 
-              <h3>Maestro:</h3>
-              <center>
-                <img src="../assets/imagenes/fotosmaestros/maestro1.jpg" alt="Maestro1" class="fotosmaestros">
-              </center>
+      				<h3>Maestro:</h3>
+      				<center>
+      					<img src="../assets/imagenes/fotosmaestros/maestro1.jpg" alt="Maestro1" class="fotosmaestros">
+      				</center>
+      				<form action="./insertaasis.php" method="post">
       					<div class="informacion" id="informacion">
       						<p>
       							<strong>ID: </strong>
-      								<input id="idtrabajador" name="idtrabajador" type="text" readonly value="<?php echo $idmaestro[$cont]; ?>" style="border:none; width:50px;">
+      								<input id="idclase" name="idclase" type="text" readonly value="<?php echo $clase[$cont]; ?>" style="border:none; width:50px;">
       						</p>
       						<p style="visibility:hidden">
       							<strong>Hora: </strong>
-      								<input id="hora" name="hora" type="text" readonly value="00:00" style="border:none; width:70px;" >
+      								<input  id="hora" name="hora" type="text" readonly value="00:00" style="border:none; width:70px;">
       						</p>
       						<p style="visibility:hidden">
       							<strong>Día: </strong>
-      								<input id="dia" name="dia"  type="text" readonly style="border:none; width:100px;" >
+      								<input  id="dia" name="dia" type="text" readonly style="border:none; width:100px;" >
       						</p>
 	      					<p>
 	      						<strong>Maestro: </strong>
@@ -246,28 +230,28 @@
     	  					</p>
       						<p>
       							<strong>Salón: </strong>
-      								<input type="text" readonly value="<?php echo $salon[$cont]; ?>" style="border:none; width:250px;">
+      								<input type="text" readonly value="<?php echo $grup[1]; ?>" style="border:none; width:250px;">
       						</p>
       						<p>
       							<strong>Grupo: </strong>
-      								<input type="text" readonly value="<?php echo $gruponombre[$cont]; ?>" style="border:none; width:250px;">
+      								<input type="text" readonly value="<?php echo $grup[0]; ?>" style="border:none; width:250px;">
       						</p>
       						<p>
       							<strong>Ubicación: </strong>
-      								<input type="text" readonly value="<?php echo $piso[$cont]; ?>" style="border:none; width:250px;">
+      								<input type="text" readonly value="<?php echo $grup[2]; ?>" style="border:none; width:250px;">
       						</p>
-      						<p style="visibility:hidden">
+      						<p style="visibility:hidden"> 
       							<strong>Clase: </strong><input type="text" readonly value="Lorem ipsum dolor sit amet." style="border:none; width:250px;">
       						</p>
+                  <p style="visibility:hidden"> 
+                    <strong>Trabajador: </strong><input id="idtrabajador" name="idtrabajador" type="text" readonly value="<?php echo $trabajador[0]; ?>" style="border:none; width:250px;">
+                  </p>
+                  <p style="visibility:hidden"> 
+                    <strong>Id periodo: </strong><input id="idperiodo" name="idperiodo" type="text" readonly value="<?php echo $periodo[0]; ?>" style="border:none; width:250px;">
+                  </p>
       						<p>
-      							<strong>Periodo: </strong><input type="text" readonly value="<?php echo $periodo[$cont].' '.$año[$cont]; ?>" style="border:none; width:250px;">
+      							<strong>Periodo: </strong><input type="text" readonly value="<?php echo $perio[0].' '.$perio[1]; ?>" style="border:none; width:250px;">
       						</p>
-                  <p style="visibility:hidden"> 
-                    <strong>Id periodo: </strong><input id="idperiodo" name="idperiodo" type="text" readonly value="<?php echo $idperiodo[0]; ?>" style="border:none; width:250px;">
-                  </p>
-                  <p style="visibility:hidden"> 
-                    <strong>Id clase: </strong><input id="idclase" name="idclase" type="text" readonly value="<?php echo $idclase[$cont]; ?>" style="border:none; width:250px;">
-                  </p>
       						<i class="fa fa-check-circle angulo" aria-hidden="true" onclick="asmaestrosi()"></i>
       						<i class="fa fa-times-circle tacha" aria-hidden="true" onclick="asmaestrono()"></i>
       						<input type="text" readonly value="" name="asistenciamaestro" id="asistenciamaestro" style="width: 30px;">
@@ -276,10 +260,9 @@
       				</form>
       			</div>
       		</div>
-          <?php $cont++;} ?>
+          <?php  $cont++; } //} ?>
     	</div>
   	</div> 
 </div>
-	
 </body>
 </html>	
