@@ -10,9 +10,11 @@
 	
 	$tablauser = mysql_fetch_array($resultado);
 	
-	$_SESSION['ID']= $tablauser['idusuario']; 
-	$_SESSION['USER']= $tablauser['usuario']; 
+	session_start();	
+	$_SESSION['IDLogueado']= $tablauser['idusuario']; 
+	$_SESSION['USERLogueado']= $tablauser['usuario']; 
 	$rol = $tablauser['rol']; 
+	$_SESSION['ROLLogueado'] = $rol;
 	
 	if($rol == $admin){
 		header("Location: ./admin");

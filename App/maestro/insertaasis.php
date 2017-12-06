@@ -15,7 +15,4 @@
   echo "<script type='text/javascript'> alert('Registro insertado con éxito');window.location='index.php' </script>";
 break;
 
-
-
-
 ?>

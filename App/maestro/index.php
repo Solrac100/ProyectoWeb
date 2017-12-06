@@ -2,8 +2,18 @@
   error_reporting(0);//sale el error de que mysql ya se hará obsoleto
   include("../Conexion/conexion.php");
 
-  $id = "3";
+  session_start();  
+ 
+  if($_SESSION['ROLLogueado'] != 'M'){
+      echo "Acceso Denegado.";
+      unset($_SESSION['IDLogueado']);
+      unset($_SESSION['USERLogueado']);
+      unset($_SESSION['ROLLogueado']);
+      session_destroy();
+      header('Location: http://www.tarea.com/');
+  }
 
+  $id = $_SESSION['IDLogueado'];
   $diahoy = date("D",time());
   switch ($diahoy) {
     case 'Mon':

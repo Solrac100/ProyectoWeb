@@ -1,3 +1,18 @@
+<?php 
+    session_start();  
+    
+    if($_SESSION['ROLLogueado'] != 'A'){
+        echo "Acceso Denegado.";
+        unset($_SESSION['IDLogueado']);
+        unset($_SESSION['USERLogueado']);
+        unset($_SESSION['ROLLogueado']);
+        session_destroy();
+        header('Location: http://www.tarea.com/');
+    }
+
+    $id = $_SESSION['IDLogueado'];
+
+?>
 <!doctype html>
 <html lang="en">
 <!-- hola jajaja 08:07pm -->
