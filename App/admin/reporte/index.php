@@ -29,13 +29,13 @@ $hoy = date("Y-m-d",time());
                                             <div class="col-md-6">
                                                 <div class="form-group label-floating">
                                                     <label class="control-label">Desde</label>
-                                                    <input type="date" class="form-control" id="fechadesde" name="fechadesde" >
+                                                    <input type="date" class="form-control" id="fechadesde" name="fechadesde" max="<?php echo $hoy; ?>">
                                                 </div>
                                             </div>   
                                             <div class="col-md-6">
                                                 <div class="form-group label-floating">
                                                     <label class="control-label">Hasta</label>
-                                                    <input type="date" class="form-control" id="fechahasta" name="fechahasta" >
+                                                    <input type="date" class="form-control" id="fechahasta" name="fechahasta" max="<?php echo $hoy; ?>">
                                                 </div>
                                             </div>
                                         </div>
@@ -48,23 +48,5 @@ $hoy = date("Y-m-d",time());
                     </div>
                 </div>
             </div>
-            <script type="text/javascript">
-                $('#fechadesde').datepicker({
-                    dateFormat: "dd-M-yy" 
-                });
-
-                $("#fechahasta").datepicker({
-                    dateFormat: "dd-M-yy", 
-                    minDate:  0,
-                    onSelect: function(date){            
-                        var date1 = $('#fechahasta').datepicker('getDate');           
-                        var date = new Date( Date.parse( date1 ) ); 
-                        date.setDate( date.getDate() + 1 );        
-                        var newDate = date.toDateString(); 
-                        newDate = new Date( Date.parse( newDate ) );                      
-                        $('#fechadesde').datepicker("option","minDate",newDate);            
-                    }
-                });
-
-            </script>
+            
 <?php include("../footer.php"); ?>
