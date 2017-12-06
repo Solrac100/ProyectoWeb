@@ -1,4 +1,4 @@
-<!-- <?php
+<?php
 session_start();
     if(empty($_SESSION['usr'])){
         echo "Debe autentificarse";
@@ -18,7 +18,7 @@ if (isset($_GET['logout'])) {
             session_destroy();
         }
     }
-?> -->
+?>
 <?php include("./header.php"); ?>
             <div class="content">
                 <div class="container-fluid">
@@ -30,7 +30,7 @@ if (isset($_GET['logout'])) {
                                     <p class="category">Datos del periodo</p>
                                 </div>
                                 <div class="card-content">
-                                    <form>
+                                    <form action="insertarPeriodo.php" method="post">
                                          <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group label-floating">
@@ -64,65 +64,71 @@ if (isset($_GET['logout'])) {
                                     <p class="category">Modificación / eliminación de periodos</p>
                                 </div>
                                 <div class="collapse navbar-collapse navbar-ex1-collapse"><!--Div buscar-->
-                                    <form class="navbar-form navbar-left" role="search" action="../assets/crud/buscar.php">
+                                    <!-- <form class="navbar-form navbar-left" role="search" action="../assets/crud/buscar.php">
                                         <div class="form-group">
                                             <input type="text" name="s" class="form-control" placeholder="Buscar">
                                         </div>
                                     <button type="submit" class="btn btn-default">&nbsp;<i class="material-icons">search</i>&nbsp;</button>
-                                    </form>
+                                    </form> -->
                                 </div><!-- /.navbar-collapse FIN DIV BUSCAR -->
                                 <div class="card-content table-responsive">
-                                    <table class="table table-hover">
-                                    <thead>
-                                        <th>ID</th>
-                                        <th>Tipo</th>
-                                        <th>Año</th>
-                                        <th> </th>
-                                    </thead>
-                                        <tbody>
+                                    <?php
+                                        error_reporting(0);
+
+                                    include "../Conexion/conexion.php";
+
+                                    $qry= "SELECT * FROM periodo";
+                                    $resultado = mysql_query($qry) or die ("*****ERROR: " .mysql_error());
+
+                                    if(mysql_num_rows($resultado)>0)
+                                    {
+                                        echo "
+                                        <table class='table table-hover'>
+                                        <thead>
+                                            <th>ID</th>
+                                            <th>Tipo</th>
+                                            <th>Año</th>
+                                            <th> </th>
+                                        </thead>";
+
+                                        while($registro = mysql_fetch_array($resultado))
+                                        {
+                                            echo "
                                             <tr>
-                                                <td>1</td>
-                                                <td>1</td>
-                                                <td>2017</td>
-                                                <td style="width:150px;">
-                                                    <a href="#" class="btn btn-sm btn-warning">Editar</a>  <!--EDITAR RUTA: ../assets/crud/editar.php-->
-                                                    <a href="#" id="eliminar" class="btn btn-sm btn-danger">Eliminar</a> <!-- id="del-<?php echo $r["id"];?>" -->
-                                                    <script>
-                                                    $("#del-"+<?php echo $r["id"];?>).click(function(e){
-                                                        e.preventDefault();
-                                                        p = confirm("Estas seguro?");
-                                                        if(p){
-                                                            window.location="#"+<?php echo $r["id"];?>;
-
-                                                        }
-
-                                                    });
-                                                    </script>
+                                                <td>".$registro['idperiodo']."</td>
+                                                <td>".$registro['tipo']."</td>
+                                                <td>".$registro['ano']."</td>
+                                                <td style='width:150px;'>
+                                                <a href='#' id='ed-".$registro['idperiodo']."' class='btn btn-sm btn-warning'>Editar</a>
+                                                <script>
+                                                $('#ed-".$registro['idperiodo']."').click(function(e){
+                                                    e.preventDefault();
+                                                    p = confirm('Estas seguro?');
+                                                    if(p){
+                                                        window.location='./frmActualizaPeriodo.php?id=".$registro['idperiodo']."';
+                                                    }
+                                                });
+                                                </script>
+                                                
+                                                <a href='#'' id='del-".$registro['idperiodo']."' class='btn btn-sm btn-danger'>Eliminar</a>
+                                                <script>
+                                                $('#del-".$registro['idperiodo']."').click(function(e){
+                                                    e.preventDefault();
+                                                    p = confirm('Estas seguro?');
+                                                    if(p){
+                                                        window.location='./eliminarPeriodo.php?id=".$registro['idperiodo']."';
+                                                    }
+                                                });
+                                                </script>
                                                 </td>
-                                            </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>1</td>
-                                                <td>2016</td>                                                
-                                                <td style="width:150px;">
-                                                    <a href="#" class="btn btn-sm btn-warning">Editar</a>  <!--EDITAR RUTA: ../assets/crud/editar.php-->
-                                                    <a href="#" id="eliminar" class="btn btn-sm btn-danger">Eliminar</a> <!-- id="del-<?php echo $r["id"];?>" -->
-                                                    <script>
-                                                    $("#del-"+<?php echo $r["id"];?>).click(function(e){
-                                                        e.preventDefault();
-                                                        p = confirm("Estas seguro?");
-                                                        if(p){
-                                                            window.location="#"+<?php echo $r["id"];?>;
+                                            </tr> ";//fin echo
+                                        }    
+                                        echo "</table>";
+                                    }else{
+                                        echo "<p class='alert alert-warning'>No hay resultados</p>";
+                                    }
 
-                                                        }
-
-                                                    });
-                                                    </script>
-                                                </td>
-                                            </tr>
-
-                                        </tbody>
-                                    </table>
+                                    ?>
                                 </div>
                             </div>
                         </div>
