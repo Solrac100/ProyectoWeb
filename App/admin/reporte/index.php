@@ -29,17 +29,25 @@ $hoy = date("Y-m-d",time());
                                             <div class="col-md-6">
                                                 <div class="form-group label-floating">
                                                     <label class="control-label">Desde</label>
-                                                    <input type="date" class="form-control" id="fechadesde" name="fechadesde" max="<?php echo $hoy; ?>">
+                                                    <input type="date" class="form-control" id="fechadesde" name="fechadesde" max="<?php echo $hoy; ?>" onchange="validafecha()">
                                                 </div>
                                             </div>   
                                             <div class="col-md-6">
                                                 <div class="form-group label-floating">
                                                     <label class="control-label">Hasta</label>
-                                                    <input type="date" class="form-control" id="fechahasta" name="fechahasta" max="<?php echo $hoy; ?>">
+                                                    <input type="date" class="form-control" id="fechahasta" name="fechahasta" max="<?php echo $hoy; ?>" onchange="validafecha()">
+                                                    <script>
+                                                        function validafecha()
+                                                        {
+                                                            var min  = document.getElementById("fechadesde").value;
+                                                            document.getElementById("fechahasta").setAttribute("min", min);
+                                            
+                                                        }
+                                                    </script>
                                                 </div>
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-primary pull-right" >Generar reporte</button>
+                                        <button type="submit" class="btn btn-primary pull-right" id="btnenviar">Generar reporte</button>
                                         <div class="clearfix"></div>
                                     </form>
                                 </div>
