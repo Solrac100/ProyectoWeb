@@ -210,9 +210,16 @@
 <div class="container">
 	<img src="../assets/imagenes/logo.png" alt="Benemérita Escuela Normal de Coahuila" class="img img-responsive imagen">
 	<h2 align="center">Jefe De grupo</h2><h3 align="center">Pase de asistencia</h3>
-  	<p><strong>Instrucciones:</strong> El pase de lista se le hará al <strong>maestro</strong> y a los <strong>alumnos</strong>.</p>
-  	<input type="submit" name="mostrarhorario" id="mostrarhorario" class="btn btn-primary pull-right mostrarhorario" value="MOSTRAR MI HORARIO" style="float: right;">
-    
+  	<form action="./horario.php" method="POST">
+      <p><strong>Instrucciones:</strong> El pase de lista se le hará al <strong>maestro</strong> y a los <strong>alumnos</strong>.</p>
+      <p>
+        <strong>Matricula: </strong><input  id="id" name="id" type="text" readonly value="<?php echo $alumno; ?>" style="border:none; width:250px;">
+      </p>
+      <p>
+        <strong>Grupo: </strong><input id="grupo" name="grupo" type="text" readonly value="<?php echo $grup[0]; ?>" style="border:none; width:250px;">
+      </p>
+    	<input type="submit" name="mostrarhorario" id="mostrarhorario" class="btn btn-primary pull-right mostrarhorario" value="MOSTRAR MI HORARIO" style="float: right;">
+    </form>
   	<div class="panel-group" id="accordion" style="margin-top: 50px;">
 	    <div class="panel panel-default">
           <?php while ($cont < 4) {

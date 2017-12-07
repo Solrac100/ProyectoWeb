@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 session_start();
     if(empty($_SESSION['usr'])){
         echo "Debe autentificarse";
@@ -18,7 +18,7 @@ if (isset($_GET['logout'])) {
             session_destroy();
         }
     }
-?>
+?> -->
 <?php include("./header.php"); ?>
             <div class="content">
                 <div class="container-fluid">

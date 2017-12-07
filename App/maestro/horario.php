@@ -2,10 +2,7 @@
     header ('Content-type: text/html; charset=utf-8');
   include("../Conexion/conexion.php");
   //recibes idgrupo y idalumno
-  $qry = "SELECT * FROM `clase` WHERE idalumno='4' and idgrupo='1' ORDER by hora ,dia";
-  //echo $qry;
-  $res = mysql_query($qry) or die ("*****ERROR AL TRAER Horario: " .mysql_error());
-  //$var = mysql_fetch_row();
+  $id = $_POST['id'];
   
   $dia=array('Lunes','Martes','Miercoles','Jueves','Viernes','Sabado');
   $hora=array('07:45 a.m','09:15 a.m','11:05 a.m','12:30 p.m');
@@ -52,7 +49,7 @@
                         echo "</td>";
                           for($j=0;$j<count($dia);$j++)
                               {
-                                  $clase=mysql_query("SELECT * from clase WHERE dia='".$dia[$j]."' and hora='".$hora[$i]."' ");
+                                  $clase=mysql_query("SELECT * from clase WHERE idtrabajador='".$id."' and dia='".$dia[$j]."' and hora='".$hora[$i]."' ");
                                   $claserow = mysql_fetch_row($clase);
                                   
                                   $trab=mysql_query("SELECT concat(nombre,' ',apellidos) as nombre from trabajador WHERE idtrabajador='".$claserow[3]."' ");
